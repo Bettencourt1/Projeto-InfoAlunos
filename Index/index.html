@@ -1,1 +1,212 @@
-index.html
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfoAlunos</title>
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="header-logo">
+            <div class="logo-img"></div> 
+            <span class="logo-text">InfoAlunos - Serviço de Informação dos Alunos - v3.1.4</span>
+        </div>
+        <div class="header-profile">
+            <div class="header-profile-links">
+                <a href="#">O meu Correio</a>
+                <a href="#">O meu Horário</a>
+                <a href="#">Matrículas/Inscrições</a>
+            </div>
+            
+            <div class="profile-pic"></div> 
+        </div>
+    </header>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>UMA</h3>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="#">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            <span>Início</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="has-submenu">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                            <span>Geral <svg class="icon-arrow arrow-icon-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="#" class="has-submenu">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                            <span>Serviços <svg class="icon-arrow arrow-icon-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="active has-submenu">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                            <span>
+                                Concursos 
+                                <svg class="icon-arrow arrow-icon-right" viewBox="0 0 24 24" fill="currentColor" stroke="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="has-submenu">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                            <span>Avaliação <svg class="icon-arrow arrow-icon-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
+                        </a>
+                    </li>
+                    <li>
+                         <a href="#" class="has-submenu">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            <span>Creditações <svg class="icon-arrow arrow-icon-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="has-submenu">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                            <span>Documentos <svg class="icon-arrow arrow-icon-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="#">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                            <span>Aula</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="#" class="has-submenu">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                            <span>Disciplina <svg class="icon-arrow arrow-icon-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="has-submenu">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                            <span>Curso <svg class="icon-arrow arrow-icon-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="has-submenu">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            <span>Instituição <svg class="icon-arrow arrow-icon-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="#">
+                            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            <span>Eleições</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content page-content">
+            
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Últimas Pautas</h4>
+                        <button class="card-icon-button" aria-label="Opções de Últimas Pautas">
+                            <span class="icon-dots">...</span>
+                        </button>
+                    </div>
+                    <div class="card-empty-content"> 
+                        <p>Nenhuma pauta recente para exibição.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Pagamentos por Liquidar</h4>
+                        <button class="card-icon-button" aria-label="Opções de Pagamentos">
+                            <span class="icon-dots">...</span>
+                        </button>
+                    </div>
+                    
+                    <div class="multibanco-info">
+                        <strong>Entidade Multibanco:</strong> 20697
+                    </div>
+
+                    <div style="overflow-x: auto;">
+                        <table class="payment-table">
+                            <thead>
+                                <tr>
+                                    <th>Limite</th>
+                                    <th>Desc.</th>
+                                    <th>Ref MB</th>
+                                    <th class="text-right">Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>2025-11-30</td><td>3ª Prestação de Propinas de CET's</td><td>21542303</td><td class="text-right">69.70 EUR</td></tr>
+                                <tr><td>2025-12-31</td><td>4ª Prestação de Propinas de CET's</td><td>21542304</td><td class="text-right">69.70 EUR</td></tr>
+                                <tr><td>2026-01-31</td><td>5ª Prestação de Propinas de CET's</td><td>21542305</td><td class="text-right">69.70 EUR</td></tr>
+                                <tr><td>2026-02-28</td><td>6ª Prestação de Propinas de CET's</td><td>21542306</td><td class="text-right">69.70 EUR</td></tr>
+                                <tr><td>2026-03-31</td><td>7ª Prestação de Propinas de CET's</td><td>21542307</td><td class="text-right">69.70 EUR</td></tr>
+                                <tr><td>2026-04-30</td><td>8ª Prestação de Propinas de CET's</td><td>21542308</td><td class="text-right">69.70 EUR</td></tr>
+                                <tr><td>2026-05-31</td><td>9ª Prestação de Propinas de CET's</td><td>21542309</td><td class="text-right">69.70 EUR</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-grid-bottom">
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Lista de Processos do Aluno - Unidade de Assuntos Académicos</h4>
+                        <button class="card-icon-button" aria-label="Opções de Lista de Processos">
+                            <span class="icon-dots">...</span>
+                        </button>
+                    </div>
+                    <div class="card-empty-content-large"> 
+                        <p>Não há processos em curso.</p>
+                    </div>
+                </div>
+            
+                <div class="card notices-card">
+                    <div class="card-header">
+                        <h4 class="card-title">Avisos - UAA (<a href="#" style="font-size: 1rem;">Ver 50</a>)</h4>
+                        <button class="card-icon-button" aria-label="Opções de Avisos">
+                            <span class="icon-dots">...</span>
+                        </button>
+                    </div>
+                    
+                    <div class="card-content">
+                        <ul>
+                            <li><a href="#"><strong>Aviso 131/UAA/25</strong> - Publicação da lista definitiva de colocação nos Concursos Especiais...</a></li>
+                            <li><a href="#"><strong>Aviso 130/UAA/25</strong> - Candidaturas ao Curso de Profissionalização em Serviço para a Docência...</a></li>
+                            <li><a href="#"><strong>Aviso 18/UAA/25</strong> - Candidaturas à Microcredencial Engenharia de Prompt / Prompt Engineering</a></li>
+                            <li><a href="#"><strong>Aviso 33/UAA/25</strong> - Calendário das Entrevistas dos candidatos ao mestrado em Psicologia Clínica...</a></li>
+                            <li><a href="#"><strong>Aviso 32/UAA/25</strong> - Publicação das listas definitivas de colocação no Doutoramento em Ciências da Saúde e Reabilitação</a></li>
+                            <li><a href="#"><strong>Aviso 31/UAA/25</strong> - Publicação da lista provisória de colocação no Doutoramento em Currículo e Inovação Pedagógica - 1ª Fase</a></li>
+                            <li><a href="#"><strong>Aviso 30/UAA/25</strong> - Publicação da lista provisória de colocação no Doutoramento em Currículo e Inovação Pedagógica</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+</html>
