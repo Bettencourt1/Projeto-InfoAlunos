@@ -8,7 +8,6 @@
 </head>
 <body>
   <header class="app-header">
-    
     <div class="header-logo">
       <div class="logo-img"></div>
       <span class="logo-text">InfoAlunos - Serviço de Informação dos Alunos - v3.1.4</span>
@@ -29,7 +28,7 @@
       <nav class="sidebar-nav">
         <ul>
           <li>
-            <a href="index.html" class="active">
+            <a href="index.html">
               <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
               <span>Início</span>
             </a>
@@ -117,7 +116,7 @@
 </label>
 <div id="submenu-documentos" class="submenu-panel">
   <a href="documentos-academicos.html">Académicos</a>
-  <a href="documentos-declaracoes.html">Declarações</a>
+  <a href="documentos-declaracoes.html" class="active">Declarações</a>
 </div>
 </li>
 
@@ -207,90 +206,7 @@
 
     <!-- Conteúdo da página -->
     <main class="main-content page-content">
-      <div class="card-grid">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Últimas Pautas</h4>
-                        <button class="card-icon-button" aria-label="Opções de Últimas Pautas">
-                            <span class="icon-dots">...</span>
-                        </button>
-                    </div>
-                    <div class="card-empty-content"> 
-                        <p>Nenhuma pauta recente para exibição.</p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Pagamentos por Liquidar</h4>
-                        <button class="card-icon-button" aria-label="Opções de Pagamentos">
-                            <span class="icon-dots">...</span>
-                        </button>
-                    </div>
-                    
-                    <div class="multibanco-info">
-                        <strong>Entidade Multibanco:</strong> 20697
-                    </div>
-
-                    <div style="overflow-x: auto;">
-                        <table class="payment-table">
-                            <thead>
-                                <tr>
-                                    <th>Limite</th>
-                                    <th>Desc.</th>
-                                    <th>Ref MB</th>
-                                    <th class="text-right">Valor</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>2025-11-30</td><td>3ª Prestação de Propinas de CET's</td><td>21542303</td><td class="text-right">69.70 EUR</td></tr>
-                                <tr><td>2025-12-31</td><td>4ª Prestação de Propinas de CET's</td><td>21542304</td><td class="text-right">69.70 EUR</td></tr>
-                                <tr><td>2026-01-31</td><td>5ª Prestação de Propinas de CET's</td><td>21542305</td><td class="text-right">69.70 EUR</td></tr>
-                                <tr><td>2026-02-28</td><td>6ª Prestação de Propinas de CET's</td><td>21542306</td><td class="text-right">69.70 EUR</td></tr>
-                                <tr><td>2026-03-31</td><td>7ª Prestação de Propinas de CET's</td><td>21542307</td><td class="text-right">69.70 EUR</td></tr>
-                                <tr><td>2026-04-30</td><td>8ª Prestação de Propinas de CET's</td><td>21542308</td><td class="text-right">69.70 EUR</td></tr>
-                                <tr><td>2026-05-31</td><td>9ª Prestação de Propinas de CET's</td><td>21542309</td><td class="text-right">69.70 EUR</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-grid-bottom">
-                
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Lista de Processos do Aluno - Unidade de Assuntos Académicos</h4>
-                        <button class="card-icon-button" aria-label="Opções de Lista de Processos">
-                            <span class="icon-dots">...</span>
-                        </button>
-                    </div>
-                    <div class="card-empty-content-large"> 
-                        <p>Não há processos em curso.</p>
-                    </div>
-                </div>
-            
-                <div class="card notices-card">
-                    <div class="card-header">
-                        <h4 class="card-title">Avisos - UAA (<a href="#" style="font-size: 1rem;">Ver 50</a>)</h4>
-                        <button class="card-icon-button" aria-label="Opções de Avisos">
-                            <span class="icon-dots">...</span>
-                        </button>
-                    </div>
-                    
-                    <div class="card-content">
-                        <ul>
-                            <li><a href="#"><strong>Aviso 131/UAA/25</strong> - Publicação da lista definitiva de colocação nos Concursos Especiais...</a></li>
-                            <li><a href="#"><strong>Aviso 130/UAA/25</strong> - Candidaturas ao Curso de Profissionalização em Serviço para a Docência...</a></li>
-                            <li><a href="#"><strong>Aviso 18/UAA/25</strong> - Candidaturas à Microcredencial Engenharia de Prompt / Prompt Engineering</a></li>
-                            <li><a href="#"><strong>Aviso 33/UAA/25</strong> - Calendário das Entrevistas dos candidatos ao mestrado em Psicologia Clínica...</a></li>
-                            <li><a href="#"><strong>Aviso 32/UAA/25</strong> - Publicação das listas definitivas de colocação no Doutoramento em Ciências da Saúde e Reabilitação</a></li>
-                            <li><a href="#"><strong>Aviso 31/UAA/25</strong> - Publicação da lista provisória de colocação no Doutoramento em Currículo e Inovação Pedagógica - 1ª Fase</a></li>
-                            <li><a href="#"><strong>Aviso 30/UAA/25</strong> - Publicação da lista provisória de colocação no Doutoramento em Currículo e Inovação Pedagógica</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+      <!-- Aqui colocas o conteúdo específico de cada página -->
     </main>
   </div> <!-- fecha app-container -->
 
