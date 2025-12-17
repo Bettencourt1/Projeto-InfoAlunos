@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Eleições · InfoAlunos</title>
+	<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+	<!-- Header -->
+	<header class="app-header">
+		<div class="header-logo">
+			<div class="logo-img"></div>
+			<span class="logo-text">InfoAlunos - Serviço de Informação dos Alunos - v3.1.4</span>
+		</div>
+		<div class="header-profile">
+			<div class="header-profile-links">
+				<a href="#">O meu Correio</a>
+				<a href="#">O meu Horário</a>
+				<a href="#">Matrículas/Inscrições</a>
+			</div>
+			<div class="profile-pic"></div>
+		</div>
+	</header>
+
+	<div class="app-container">
+		<!-- Sidebar -->
+		<aside class="sidebar">
+		  <div class="sidebar-header"><h3>UMA</h3></div>
+		  <nav class="sidebar-nav">
+		    <ul>
+		      <li>
+		        <a href="index.html">
+		          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+		          <span>Início</span>
+		        </a>
+		      </li>
+
+		      <!-- Geral -->
+		      <li>
+		        <input type="checkbox" id="toggle-geral" class="submenu-toggle" />
+		        <label for="toggle-geral" class="has-submenu">
+		          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+		          <span>Geral</span>
+		        </label>
+		        <div id="submenu-geral" class="submenu-panel">
+		          <a href="geral-processos.html">Processos</a>
+		          <a href="geral-dados-pessoais.html">Dados Pessoais</a>
+		          <a href="geral-privacidade.html">Privacidade</a>
+		          <a href="geral-ajuda.html">Ajuda</a>
+		        </div>
+		      </li>
+
+		      <!-- Serviços -->
+		      <li>
+		        <input type="checkbox" id="toggle-servicos" class="submenu-toggle" />
+		        <label for="toggle-servicos" class="has-submenu">
+		          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+		          <span>Serviços</span>
+		        </label>
+		        <div id="submenu-servicos" class="submenu-panel">
+		          <a href="servicos-pagamentos.html">Pagamentos</a>
+		          <a href="servicos-matriculas.html">Matrículas / Inscrições</a>
+		          <a href="servicos-inscricao-turmas.html">Inscrição em Turmas</a>
+		          <a href="servicos-requerimentos.html">Requerimentos</a>
+		          <a href="servicos-cartao.html">Cartão Universitário</a>
+		          <a href="https://www.uma.pt/sobre/servico-apoio-estudantes/accao-social/?IDM=PT&ID0=1765992833&ID1=&ID2=500&ID3=a3dd3c037e3dd8591e08176e8968201a">SASUMa / Bolsas</a>
+		        </div>
+		      </li>
+
+		      <!-- Concursos -->
+		      <li>
+		        <input type="checkbox" id="toggle-concursos" class="submenu-toggle" />
+		        <label for="toggle-concursos" class="has-submenu">
+		          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+		          <span>Concursos</span>
+		        </label>
+		        <div id="submenu-concursos" class="submenu-panel">
+		          <a href="concursos-candidaturas.html">Candidaturas</a>
+		        </div>
+		      </li>
+
+		      <!-- Avaliação -->
+		      <li>
+		        <input type="checkbox" id="toggle-avaliacao" class="submenu-toggle" />
+		        <label for="toggle-avaliacao" class="has-submenu">
+		          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+		          <span>Avaliação</span>
+		        </label>
+		        <div id="submenu-avaliacao" class="submenu-panel">
+		          <a href="avaliacao-pautas.html">Pautas</a>
+		          <a href="avaliacao-reclamacao.html">Reclamação de Notas</a>
+		          <a href="avaliacao-inqueritos.html">Inquéritos</a>
+		          <a href="avaliacao-resultados.html">Resultado de Inquéritos</a>
+		          <a href="avaliacao-inquerito-raides.html">Inquérito RAIDES</a>
+		        </div>
+		      </li>
+
+		      <!-- Creditações -->
+		      <li>
+		        <input type="checkbox" id="toggle-creditacoes" class="submenu-toggle" />
+		        <label for="toggle-creditacoes" class="has-submenu">
+		          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+		          <span>Creditações</span>
+		        </label>
+		        <div id="submenu-creditacoes" class="submenu-panel">
+		          <a href="creditacoes-lista.html">Lista de Processos</a>
+		          <a href="creditacoes-novo.html">Novo Processo</a>
+		        </div>
+		      </li>
+
+		      <!-- Documentos -->
+		      <li>
+		        <input type="checkbox" id="toggle-documentos" class="submenu-toggle" />
+		        <label for="toggle-documentos" class="has-submenu">
+		          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+		          <span>Documentos</span>
+		        </label>
+		        <div id="submenu-documentos" class="submenu-panel">
+		          <a href="documentos-academicos.html">Académicos</a>
+		          <a href="documentos-declaracoes.html">Declarações</a>
+		        </div>
+		      </li>
+
+		      <!-- Aula -->
+		      <li>
+		        <input type="checkbox" id="toggle-aula" class="submenu-toggle" />
+		        <label for="toggle-aula" class="has-submenu">
+		          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+		            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+		            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+		          </svg>
+		          <span>Aula</span>
+		        </label>
+		        <div id="submenu-aula" class="submenu-panel">
+		          <a href="aula-calendario.html">Calendário</a>
+		          <a href="aula-sumarios.html">Sumários</a>
+		          <a href="aula-marcarpresenca.html">Marcar Presença</a>
+		        </div>
+		      </li>
+
+		      <!-- Disciplina -->
+		      <li>
+		        <input type="checkbox" id="toggle-disciplina" class="submenu-toggle" />
+		        <label for="toggle-disciplina" class="has-submenu">
+		          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+		            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+		            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+		          </svg>
+		          <span>Disciplina</span>
+		        </label>
+		        <div id="submenu-disciplina" class="submenu-panel">
+		          <a href="disciplina-ficha.html">Ficha</a>
+		          <a href="disciplina-programa.html">Programa</a>
+		          <a href="disciplina-ficheiros.html">Ficheiros</a>
+		        </div>
+		      </li>
+
+		      <!-- Curso -->
+		      <li>
+		        <input type="checkbox" id="toggle-curso" class="submenu-toggle" />
+		        <label for="toggle-curso" class="has-submenu">
+		          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+		            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+		          </svg>
+		          <span>Curso</span>
+		        </label>
+		        <div id="submenu-curso" class="submenu-panel">
+		          <a href="curso-fichacurricular.html">Ficha Curricular</a>
+		          <a href="curso-horarios.html">Horários</a>
+		          <a href="curso-historicomatriculas.html">Histórico de Matrículas-Inscrições</a>
+		          <a href="curso-historicodisciplinas.html">Histórico de Disciplinas Aprovadas</a>
+		          <a href="curso-transicao.html">Transição para Bolonha</a>
+		          <a href="curso-planoconclusao.html">Plano de conclusão</a>
+		          <a href="curso-quadro.html">Quadro de Prescrição</a>
+		          <a href="curso-atividadesacademicas.html">Atividades Académicas</a>
+		        </div>
+		      </li>
+
+		      <!-- Instituição -->
+		      <li>
+		        <input type="checkbox" id="toggle-instituicao" class="submenu-toggle" />
+		        <label for="toggle-instituicao" class="has-submenu">
+		          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+		            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+		            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+		          </svg>
+		          <span>Instituição</span>
+		        </label>
+		        <div id="submenu-instituicao" class="submenu-panel">
+		          <a href="instituicao-estrutura.html">Estrutura Orgânica</a>
+		        </div>
+		      </li>
+
+		      <!-- Eleições -->
+		      <li>
+		        <a href="eleicoes.html" class="active">
+		          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+		            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+		            <polyline points="7 10 12 15 17 10"></polyline>
+		            <line x1="12" y1="15" x2="12" y2="3"></line>
+		          </svg>
+		          <span>Eleições</span>
+		        </a>
+		      </li>
+		    </ul>
+		  </nav>
+		</aside>
+
+		<!-- Main content -->
+		<main class="main-content page-content">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">Eleições</h4>
+				</div>
+				<div class="card-content">
+					<p>Conteúdo relativo às eleições será colocado aqui.</p>
+				</div>
+			</div>
+		</main>
+
+		<!-- Footer -->
+		<footer class="site-footer">
+			<div class="footer-content">
+				<p>
+					© Universidade da Madeira – Gabinete de Desenvolvimento de Aplicações Informáticas ·
+					<a href="#">Proteção de Dados</a> ·
+					<a href="#">Termos de Utilização</a>
+				</p>
+				<p>
+					Colégio dos Jesuítas, 9000-081 Funchal · Tel: +351 291 209 400 · Fax: +351 291 209 410
+				</p>
+				<p class="footer-meta">Processado em 0.04 segundos – powered by hydra framework</p>
+			</div>
+		</footer>
+
+	</div> <!-- fecha app-container -->
+
+</body>
+</html>

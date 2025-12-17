@@ -34,6 +34,9 @@
   --submenu-width: 260px;
 }
 
+/* Box sizing reset to avoid width + padding overflow */
+*, *::before, *::after { box-sizing: border-box; }
+
 body {
   font-family: var(--font-family);
   font-size: var(--font-size-base);
@@ -78,17 +81,29 @@ a:hover {
 
 .app-container {
   display: grid;
-  grid-template-columns: 250px 1fr;
+  /* Allow the main column to grow and shrink reliably */
+  grid-template-columns: 250px minmax(0, 1fr);
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
 }
 
 .main-content {
   display: grid;
-  grid-template-columns: subgrid;
+  grid-template-columns: 1fr;
   gap: var(--spacing-lg);
-  padding: var(--spacing-lg);
+  padding: calc(50px + var(--spacing-md)) var(--spacing-lg);
   container-type: inline-size;
+  box-sizing: border-box;
+  width: 100%;           /* take the full width of the main grid cell */
+  min-width: 0;          /* allow the grid to shrink correctly */
+  align-self: stretch;
+}
+
+.main-content > .card { width: 100%; max-width: none; }
+
+@media (min-width: 769px) {
+  /* Ensure main content never exceeds viewport width minus sidebar to avoid horizontal clipping */
+  .main-content { max-width: calc(100vw - 250px); }
 }
 
 
@@ -102,7 +117,11 @@ a:hover {
   flex-direction: column;
   padding-top: 50px; /* espaço para não colidir com o header */
   box-sizing: border-box;
-  height: 100%; /* ocupa toda a altura da célula do grid */
+  /* Estende a barra lateral do topo ao rodapé do grid para evitar espaço vazio */
+  grid-row: 1 / -1;
+  align-self: stretch;
+  height: auto; /* ocupa todo o espaço vertical disponível */
+  min-height: 0;
 }
 
 
@@ -295,13 +314,19 @@ a:hover {
         /* Largura suficiente para mostrar o texto e ícone */
         width: 170px; 
         position: fixed;
-        top: 50px; left: 0; bottom: 0;
+        top: 50px; left: 0; bottom: 60px;
         padding-top: 0; overflow-y: auto; z-index: 900;
     }
     .main-content {
   margin-left: 170px; /* empurra o conteúdo para não ficar por baixo da sidebar */
   padding: var(--spacing-md);
+  margin-bottom: 60px; /* evita sobreposição com o footer */
 }
+
+    .site-footer {
+      position: relative; /* cria contexto para z-index */
+      z-index: 1100; /* garante que o footer aparece acima da sidebar */
+    }
 
     
     .sidebar-header {
@@ -426,6 +451,8 @@ a:hover {
   .logo-text {
     display: none;   /* esconde o texto InfoAlunos */
   }
+
+  .main-content { padding-top: calc(50px + var(--spacing-md)); }
 
   .header-profile-links {
     display: flex;   /* garante que os links aparecem */

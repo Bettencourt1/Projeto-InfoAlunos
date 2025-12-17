@@ -62,7 +62,7 @@
               <a href="servicos-inscricao-turmas.html">Inscrição em Turmas</a>
               <a href="servicos-requerimentos.html" class="active">Requerimentos</a>
               <a href="servicos-cartao.html">Cartão Universitário</a>
-              <a href="servicos-bolsas.html">SASUMa / Bolsas</a>
+              <a href="https://www.uma.pt/sobre/servico-apoio-estudantes/accao-social/?IDM=PT&ID0=1765992833&ID1=&ID2=500&ID3=a3dd3c037e3dd8591e08176e8968201a">SASUMa / Bolsas</a>
             </div>
           </li>
 
@@ -133,6 +133,7 @@
   <div id="submenu-aula" class="submenu-panel">
     <a href="aula-calendario.html">Calendário</a>
     <a href="aula-sumarios.html">Sumários</a>
+    <a href="aula-marcarpresenca.html">Marcar Presença</a>
   </div>
 </li>
 
@@ -163,14 +164,14 @@
     <span>Curso</span>
   </label>
   <div id="submenu-curso" class="submenu-panel">
-    <a href="curso-ficha.html">Ficha Curricular</a>
+    <a href="curso-fichacurricular.html">Ficha Curricular</a>
     <a href="curso-horarios.html">Horários</a>
-    <a href="curso-historico-matriculas.html">Histórico de Matrículas-Inscrições</a>
-    <a href="curso-historico-disciplinas.html">Histórico de Disciplinas Aprovadas</a>
+    <a href="curso-historicomatriculas.html">Histórico de Matrículas-Inscrições</a>
+    <a href="curso-historicodisciplinas.html">Histórico de Disciplinas Aprovadas</a>
     <a href="curso-transicao.html">Transição para Bolonha</a>
-    <a href="curso-plano-conclusao.html">Plano de conclusão</a>
-    <a href="curso-quadro-prescricao.html">Quadro de Prescrição</a>
-    <a href="curso-atividades.html">Atividades Académicas</a>
+    <a href="curso-planoconclusao.html">Plano de conclusão</a>
+    <a href="curso-quadro.html">Quadro de Prescrição</a>
+    <a href="curso-atividadesacademicas.html">Atividades Académicas</a>
   </div>
 </li>
 
@@ -204,10 +205,141 @@
       </nav>
     </aside>
 
-    <!-- Conteúdo da página -->
+    <!-- Main content -->
     <main class="main-content page-content">
-      <!-- Aqui colocas o conteúdo específico de cada página -->
+
+      <!-- Tabs: Lista / Submeter -->
+      <div class="req-tabs-wrapper">
+        <input type="radio" name="req-tab" id="tab-lista" class="req-tab-radio" checked>
+        <input type="radio" name="req-tab" id="tab-submeter" class="req-tab-radio">
+
+        <div class="req-tabs">
+          <label for="tab-lista" class="req-tab">Lista de Requerimentos</label>
+          <label for="tab-submeter" class="req-tab">Submeter Novo/Detalhe</label>
+        </div>
+
+        <div class="req-panels">
+          <div class="req-panel req-panel-lista">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">Lista de Requerimentos</h2>
+              </div>
+              <div class="card-content">
+                <p>Para inserir um novo requerimento clique no tabulador <strong>'Submeter Novo/Detalhe'</strong>.</p>
+
+                <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-md); margin-top: var(--spacing-md);">
+                  <div style="flex: 1 1 200px;">
+                    <label for="tipo-pedido">Filtrar por Tipo de Pedido</label>
+                    <select id="tipo-pedido" style="width: 100%;">
+                      <option selected>Todos</option>
+                    </select>
+                  </div>
+                  <div style="flex: 1 1 200px;">
+                    <label for="despacho">Filtrar por Despacho</label>
+                    <select id="despacho" style="width: 100%;">
+                      <option selected>Todos</option>
+                    </select>
+                  </div>
+                  <div style="align-self: flex-end;">
+                    <button style="background-color: var(--cor-primaria); color: var(--bg-light); border: none; padding: 0.5rem 1rem; border-radius: 4px;">Filtrar Lista</button>
+                  </div>
+                </div>
+
+                <div class="multibanco-info" style="margin-top: var(--spacing-lg);">
+                  <h3 style="font-size: var(--font-size-h6); font-weight: var(--font-weight-semibold); margin-bottom: var(--spacing-sm);">Lista de Requerimentos</h3>
+                  <div class="card-empty-content">Sem resultados</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="req-panel req-panel-submeter">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">Submeter Novo/Detalhe</h2>
+              </div>
+              <div class="card-content">
+                <!-- Mockup form (HTML/CSS only) similar to provided screenshot -->
+                <form style="display: grid; gap: var(--spacing-md);">
+                  <fieldset style="border: none;">
+                    <legend style="font-weight: var(--font-weight-semibold); margin-bottom: var(--spacing-sm);">Pedido</legend>
+                    <label>Curso <input type="text" /></label>
+                    <label>Ano Lectivo <input type="text" /></label>
+                    <label>Pedido <input type="text" /></label>
+                    <label>Assunto <textarea rows="4"></textarea></label>
+                    <label style="display:flex; gap: var(--spacing-md);">
+                      <div style="flex:1">Nº Aluno <input type="text" value="" /></div>
+                      <div style="flex:2">Entidade <input type="text" value="" /></div>
+                    </label>
+                    <label>Data do Pedido <input type="date" /></label>
+                    <label>Observações <textarea rows="3"></textarea></label>
+                    <label style="display:flex; align-items:center; gap: 0.5rem;"><input type="checkbox" /> Taxa de Urgência</label>
+                    <label>Anexar Documento <input type="file" /></label>
+                  </fieldset>
+
+                  <fieldset style="border: none;">
+                    <legend style="font-weight: var(--font-weight-semibold); margin-bottom: var(--spacing-sm);">Expedição por Correio</legend>
+                    <label>País <input type="text" /></label>
+                    <label>Expedição <input type="text" /></label>
+                    <label>Morada <input type="text" /></label>
+                    <label style="display:flex; gap: var(--spacing-sm);">
+                      <div style="flex:0 0 120px">Código Postal <input type="text" /></div>
+                      <div style="flex:1">Localidade <input type="text" /></div>
+                    </label>
+                  </fieldset>
+
+                  <div style="display: flex; gap: var(--spacing-md); flex-wrap: wrap;">
+                    <button type="reset" style="background-color: var(--cor-aviso); color: var(--text-dark); padding: 0.5rem 1rem; border: none; border-radius: 4px;">Limpar Campos</button>
+                    <button type="button" style="background-color: var(--cor-perigo); color: var(--bg-light); padding: 0.5rem 1rem; border: none; border-radius: 4px;">Cancelar Processo</button>
+                    <button type="submit" style="background-color: var(--cor-sucesso); color: var(--bg-light); padding: 0.5rem 1rem; border: none; border-radius: 4px;">Guardar Processo</button>
+                  </div>
+                </form>
+
+                <div class="multibanco-info" style="margin-top: var(--spacing-lg);">
+                  <p><strong>Documentos Associados ao Processo:</strong></p>
+                  <p>Não foram encontrados ficheiros ou não seleccionou um processo.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inline CSS to handle tab panels (kept scoped to this page) -->
+        <style>
+          .req-tabs { display: flex; gap: 0.5rem; border-bottom: 1px solid var(--border-color); margin-bottom: var(--spacing-md); }
+          .req-tab { padding: 0.5rem 1rem; background: none; border: 1px solid var(--border-color); border-bottom: none; border-radius: 4px 4px 0 0; cursor: pointer; }
+          .req-tab:hover { background: var(--bg-lighter); }
+          .req-tab-radio { position: absolute; left: -9999px; }
+          .req-panels { min-height: 200px; }
+          .req-panel { display: none; }
+          #tab-lista:checked ~ .req-panels .req-panel-lista { display: block; }
+          #tab-submeter:checked ~ .req-panels .req-panel-submeter { display: block; }
+          /* Active tab visual */
+          #tab-lista:checked ~ .req-tabs label[for="tab-lista"],
+          #tab-submeter:checked ~ .req-tabs label[for="tab-submeter"] {
+            background-color: var(--bg-light);
+            color: var(--cor-primaria);
+            border-bottom: 1px solid var(--bg-light);
+            font-weight: var(--font-weight-semibold);
+          }
+        </style>
+
     </main>
+    <footer class="site-footer">
+      <div class="footer-content">
+        <p>
+          © Universidade da Madeira – Gabinete de Desenvolvimento de Aplicações Informáticas ·
+          <a href="#">Proteção de Dados</a> ·
+          <a href="#">Termos de Utilização</a>
+        </p>
+        <p>
+          Colégio dos Jesuítas, 9000-081 Funchal · Tel: +351 291 209 400 · Fax: +351 291 209 410
+        </p>
+        <p class="footer-meta">
+          Processado em 0.04 segundos – powered by hydra framework
+        </p>
+      </div>
+    </footer>
   </div> <!-- fecha app-container -->
 
 </body>
