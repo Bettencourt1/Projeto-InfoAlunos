@@ -3,47 +3,47 @@ const path = require('path');
 
 const root = path.resolve(__dirname, '..');
 
-const rules = [
-  [/^index\.html$/i, 'Index/$0'],
-  [/^geral-(.+)$/i, 'Geral/$0'],
-  [/^geral-(.+)\.html$/i, 'Geral/$&'],
-  [/^servicos-(.+)\.html$/i, 'Serviços/$&'],
-  [/^concursos-(.+)\.html$/i, 'Concursos/$&'],
-  [/^avaliacao-(.+)\.html$/i, 'Avaliação/$&'],
-  [/^creditacoes-(.+)\.html$/i, 'Creditações/$&'],
-  [/^documentos-(.+)\.html$/i, 'Documentos/$&'],
-  [/^aula-(.+)\.html$/i, 'Aula/$&'],
-  [/^disciplina-(.+)\.html$/i, 'Disciplina/$&'],
-  [/^curso-(.+)\.html$/i, 'Curso/$&'],
-  [/^instituicao-(.+)\.html$/i, 'Instituição/$&'],
-  [/^eleicoes\.html$/i, 'Eleições/eleicoes.html']
-];
+// Instead of naive static prefix rules, resolve broken sidebar hrefs to the
+// single matching HTML file in the project and write a proper relative path
+// from the source file to the target. This avoids broken links when pages are
+// nested in subfolders (e.g. Disciplina/*.html).
 
-function applyRules(href) {
-  for (const [re, repl] of rules) {
-    if (re.test(href)) {
-      // For generic replacements, avoid double-prefixing
-      if (href.includes('/') || href.includes('://')) return href;
-      const out = href.replace(re, (match) => {
-        // handle special case: use forward slashes and keep filename
-        if (/^index\.html$/i.test(href)) return 'Index/index.html';
-        if (/^eleicoes\.html$/i.test(href)) return 'Eleições/eleicoes.html';
-        if (/^geral-/i.test(href)) return 'Geral/' + href;
-        if (/^servicos-/i.test(href)) return 'Serviços/' + href;
-        if (/^concursos-/i.test(href)) return 'Concursos/' + href;
-        if (/^avaliacao-/i.test(href)) return 'Avaliação/' + href;
-        if (/^creditacoes-/i.test(href)) return 'Creditações/' + href;
-        if (/^documentos-/i.test(href)) return 'Documentos/' + href;
-        if (/^aula-/i.test(href)) return 'Aula/' + href;
-        if (/^disciplina-/i.test(href)) return 'Disciplina/' + href;
-        if (/^curso-/i.test(href)) return 'Curso/' + href;
-        if (/^instituicao-/i.test(href)) return 'Instituição/' + href;
-        return match;
-      });
-      return out.replace(/\\/g, '/');
-    }
+// collect all html files for basename matching
+const allHtmlFiles = walk(root);
+
+function resolveToRelative(filePath, href, baseResolved) {
+  // ignore absolute URLs and anchors
+  if (/^(https?:|mailto:|#)/i.test(href)) return null;
+
+  const srcDir = path.dirname(filePath);
+  // If the document declares a <base href>, resolution at runtime will use
+  // that base instead of the document directory. Respect baseResolved when
+  // checking whether the current href is valid.
+  let resolved;
+  if (baseResolved && typeof baseResolved === 'string' && !baseResolved.startsWith('http')) {
+    resolved = path.resolve(baseResolved, href);
+  } else {
+    resolved = path.resolve(srcDir, href);
   }
-  return href;
+  if (fs.existsSync(resolved)) return null; // already valid
+
+  // find candidate files matching the target basename
+  const basename = path.basename(href);
+  const matches = allHtmlFiles.filter(f => path.basename(f).toLowerCase() === basename.toLowerCase());
+  if (matches.length === 1) {
+    let rel;
+    // If this file declares a <base href="..">, compute path relative to that base
+    if (baseResolved && typeof baseResolved === 'string' && !baseResolved.startsWith('http')) {
+      rel = path.relative(baseResolved, matches[0]).replace(/\\/g, '/');
+      // when using base, keep it clean (no leading ./)
+    } else {
+      rel = path.relative(srcDir, matches[0]).replace(/\\/g, '/');
+      if (!rel.startsWith('.') && !rel.startsWith('/')) rel = './' + rel;
+    }
+    return rel;
+  }
+
+  return null;
 }
 
 let modified = 0;
@@ -69,14 +69,29 @@ for (const filePath of files) {
   const blocks = s.match(navRegex);
   if (!blocks) continue;
 
+  // detect <base href="..."> so we can compute relative links correctly
+  const baseRe = /<base\s+href=["']([^"']+)["']/i;
+  const baseMatch = baseRe.exec(s);
+  let baseResolved = path.dirname(filePath);
+  if (baseMatch) {
+    const baseHref = baseMatch[1];
+    if (baseHref.startsWith('http')) {
+      baseResolved = baseHref; // remote base - we'll skip fs checks for these
+    } else if (baseHref.startsWith('/')) {
+      baseResolved = path.resolve(root, baseHref.replace(/^\/+/, ''));
+    } else {
+      baseResolved = path.resolve(path.dirname(filePath), baseHref);
+    }
+  }
+
   let newS = s;
   for (const block of blocks) {
-    let replacedBlock = block.replace(/href=\"([^\"]+)\"/g, (m, href) => {
+    let replacedBlock = block.replace(/href="([^"]+)"/g, (m, href) => {
       const cleaned = href.trim();
       // ignore absolute URLs and anchors and mailto
       if (/^(https?:|mailto:|#)/i.test(cleaned)) return m;
-      const newHref = applyRules(cleaned);
-      if (newHref !== cleaned) {
+      const newHref = resolveToRelative(filePath, cleaned, baseResolved);
+      if (newHref) {
         modified++;
         return `href="${newHref}"`;
       }
