@@ -4,7 +4,9 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Ficheiros da Disciplina · InfoAlunos</title>
-	<link rel="stylesheet" href="../../styles.css" />
+
+	<!-- Ajustei o caminho do stylesheet: a página está em /Disciplina, o styles.css está uma pasta acima -->
+	<link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
 	<!-- Header -->
@@ -14,20 +16,21 @@
 			<span class="logo-text">InfoAlunos - Serviço de Informação dos Alunos - v3.1.4</span>
 		</div>
 		<div class="header-profile">
-			<div class="header-profile-links">
-				<a href="#">O meu Correio</a>
-				<a href="#">O meu Horário</a>
-				<a href="#">Matrículas/Inscrições</a>
+			<!-- Marquei os 3 links essenciais com a classe "priority" para o CSS mobile agir sobre eles -->
+			<div class="header-profile-links" role="navigation" aria-label="Links rápidos do utilizador">
+				<a href="#" class="priority">O meu Correio</a>
+				<a href="#" class="priority">O meu Horário</a>
+				<a href="#" class="priority">Matrículas/Inscrições</a>
 			</div>
-			<div class="profile-pic"></div>
+			<div class="profile-pic" aria-hidden="true"></div>
 		</div>
 	</header>
 
 	<div class="app-container">
 		<!-- Sidebar -->
-		<aside class="sidebar">
+		<aside class="sidebar" aria-label="Navegação principal">
 		  <div class="sidebar-header"><h3>UMA</h3></div>
-		  <nav class="sidebar-nav">
+		  <nav class="sidebar-nav" role="navigation" aria-label="Menu principal">
 		    <ul>
 		      <li>
 		        <a href="../Index/index.html">
@@ -64,7 +67,7 @@
 		          <a href="../Serviços/servicos-inscricao-turmas.html">Inscrição em Turmas</a>
 		          <a href="../Serviços/servicos-requerimentos.html">Requerimentos</a>
 		          <a href="../Serviços/servicos-cartao.html">Cartão Universitário</a>
-		          <a href="https://www.uma.pt/sobre/servico-apoio-estudantes/accao-social/?IDM=PT&ID0=1765992833&ID1=&ID2=500&ID3=a3dd3c037e3dd8591e08176e8968201a">SASUMa / Bolsas</a>
+		          <a href="https://www.uma.pt/sobre/servico-apoio-estudantes/accao-social/?IDM=PT&ID0=1765992833&ID1=&ID2=500&ID3=a3dd3c037e3dd8591e08176e8968201a" target="_blank" rel="noopener">SASUMa / Bolsas</a>
 		        </div>
 		      </li>
 
@@ -236,4 +239,3 @@
 
 </body>
 </html>
-

@@ -1,459 +1,177 @@
-:root {
+/* Projeto InfoAlunos — styles.css (versão limpa e organizada)
+   - Consolidei variáveis, removi duplicações e uni as regras de responsive/fixes.
+   - Mantive comportamento desejado:
+     * Desktop: sidebar fixa à esquerda
+     * <=992px: sidebar flui para topo (topbar), sem sobrepor o conteúdo
+     * <=768px: comportamento compatível com regras antigas (170px sidebar fixa)
+     * <=480px: ajustes finais mobile
+   - Submenus abrem com checkbox-toggle/fragment (CSS-only); não há JS.
+   - Ícones da sidebar com tamanho consistente.
+*/
+
+/* =========================
+   Variáveis globais
+   ========================= */
+:root{
   --cor-primaria: #0056a0;
   --cor-secundaria: #6c757d;
   --cor-sucesso: #28a745;
   --cor-perigo: #dc3545;
   --cor-aviso: #ffc107;
   --cor-info: #17a2b8;
+
   --bg-light: #ffffff;
   --bg-dark: #f8f9fa;
   --bg-lighter: #e9ecef;
-  --bg-sidebar-active: #e6f0ff; 
+  --bg-sidebar-active: #e6f0ff;
+
   --text-dark: #212529;
   --text-light: #6c757d;
+
   --border-color: #dee2e6;
-  --box-shadow-default: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --box-shadow-default: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+
   --transition-fast: all 0.15s ease-in-out;
-  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-size-base: 1rem;
   --line-height-base: 1.6;
+
   --font-size-h1: 2.5rem;
   --font-size-h2: 2rem;
   --font-size-h3: 1.75rem;
   --font-size-h4: 1.5rem;
   --font-size-h5: 1.25rem;
   --font-size-h6: 1rem;
+
   --font-weight-bold: 700;
   --font-weight-semibold: 600;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
+
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
   --spacing-lg: 1.5rem;
   --spacing-xl: 3rem;
+
   --submenu-width: 260px;
+  --max-sidebar-width: 250px;
+
+  /* suporte para responsive-topbar */
+  --topbar-height: 0;           /* definido em media queries quando a sidebar vira topbar */
+  --content-max-width: 1100px;
 }
 
-/* Box sizing reset to avoid width + padding overflow */
-*, *::before, *::after { box-sizing: border-box; }
+/* =========================
+   Reset / Base
+   ========================= */
+*,
+*::before,
+*::after { box-sizing: border-box; }
 
-body {
+html, body {
+  height: 100%;
+  margin: 0;
   font-family: var(--font-family);
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
-  color: light-dark(var(--text-dark), #ddd);
-  background-color: light-dark(var(--bg-lighter), #1e1e1e); 
-  margin: 0;
-  overflow-x: hidden; 
+  color: var(--text-dark);
+  background-color: var(--bg-lighter);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden; /* prevenir scroll horizontal global */
 }
 
-h1, h2, h3, h4, h5, h6 {
-  margin: 0 0 var(--spacing-md);
+img { max-width: 100%; height: auto; display: block; }
+
+h1,h2,h3,h4,h5,h6 {
+  margin: 0 0 var(--spacing-md) 0;
   font-weight: var(--font-weight-bold);
-  color: light-dark(var(--text-dark), #fff);
+  color: var(--text-dark);
 }
 
-p {
-  margin: 0 0 var(--spacing-md);
-}
+p { margin: 0 0 var(--spacing-md); }
 
 a {
   color: var(--cor-primaria);
   text-decoration: none;
   transition: var(--transition-fast);
 }
+a:hover { color: #0056b3; text-decoration: underline; }
 
-a:hover {
-  color: #0056b3;
-}
-
-.badge {
-  display: inline-block;
-  padding: 0.25em 0.4em;
-  font-size: 75%;
-  font-weight: var(--font-weight-bold);
-  line-height: 1;
-  border-radius: 0.25rem;
-  color: var(--bg-light);
-  background-color: var(--cor-secundaria);
-}
-
+/* =========================
+   Layout: grid with sidebar + header
+   ========================= */
 .app-container {
   display: grid;
-  /* Allow the main column to grow and shrink reliably */
-  grid-template-columns: 250px minmax(0, 1fr);
+  grid-template-columns: var(--max-sidebar-width) minmax(0, 1fr);
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
 }
 
-.main-content {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-lg);
-  padding: calc(50px + var(--spacing-md)) var(--spacing-lg);
-  container-type: inline-size;
-  box-sizing: border-box;
-  width: 100%;           /* take the full width of the main grid cell */
-  min-width: 0;          /* allow the grid to shrink correctly */
-  align-self: stretch;
+/* Header */
+.app-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 50px;
+  background-color: var(--cor-primaria);
+  color: var(--bg-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--spacing-lg);
+  z-index: 1000;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  padding-left: var(--max-sidebar-width); /* evita sobrepor a sidebar no desktop */
 }
 
-.main-content > .card { width: 100%; max-width: none; }
-
-@media (min-width: 769px) {
-  /* Ensure main content never exceeds viewport width minus sidebar to avoid horizontal clipping */
-  .main-content { max-width: calc(100vw - 250px); }
-}
-
-
-
-
+/* Sidebar */
 .sidebar {
-  width: 250px;
-  background-color: light-dark(var(--bg-light), #252525);
-  border-right: 1px solid light-dark(var(--border-color), #444);
+  width: var(--max-sidebar-width);
+  background-color: var(--bg-light);
+  border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
-  padding-top: 50px; /* espaço para não colidir com o header */
-  box-sizing: border-box;
-  /* Estende a barra lateral do topo ao rodapé do grid para evitar espaço vazio */
+  padding-top: 50px; /* espaço para o header fixo */
   grid-row: 1 / -1;
   align-self: stretch;
-  height: auto; /* ocupa todo o espaço vertical disponível */
   min-height: 0;
+  box-sizing: border-box;
+  z-index: 900;
 }
-
 
 .sidebar-header {
   padding: var(--spacing-lg);
-  text-align: center; 
+  text-align: center;
   font-size: var(--font-size-h4);
   font-weight: var(--font-weight-bold);
   color: var(--cor-primaria);
-  border-bottom: 1px solid var(--border-color); 
+  border-bottom: 1px solid var(--border-color);
 }
 .sidebar-header h3 { margin: 0; }
 
+/* =========================
+   Sidebar navigation
+   ========================= */
 .sidebar-nav {
   flex-grow: 1;
   padding: var(--spacing-md) 0;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
-
-.sidebar-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sidebar-nav a {
-  display: flex;
-  align-items: center; 
-  gap: var(--spacing-sm);
-  padding: var(--spacing-sm) var(--spacing-lg); 
-  color: light-dark(var(--text-dark), #ddd);
-  transition: var(--transition-fast);
-  font-size: 0.95rem; 
-  font-weight: var(--font-weight-medium); 
-}
-
-/* Buttons used for submenu parents are styled to match links (no JS required) */
-.sidebar-nav button {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-sm) var(--spacing-lg);
-  color: light-dark(var(--text-dark), #ddd);
-  transition: var(--transition-fast);
-  font-size: 0.95rem;
-  font-weight: var(--font-weight-medium);
-  background: none;
-  border: none;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-}
-
-/* Visible focus for keyboard users */
-.sidebar-nav button:focus {
-  outline: 2px solid rgba(0,86,160,0.15);
-  box-shadow: 0 0 0 3px rgba(0,86,160,0.06);
-  border-radius: 4px;
-}
-
-.nav-icon {
-    width: 20px; height: 20px;
-    flex-shrink: 0; margin-right: 5px; 
-}
-
-.sidebar-nav a:hover, .sidebar-nav button:hover {
-  background-color: light-dark(var(--bg-lighter), #353535);
-  color: var(--cor-primaria);
-}
-
-.sidebar-nav a.active, .sidebar-nav button.active {
-  background-color: var(--bg-sidebar-active);
-  color: var(--cor-primaria);
-  font-weight: var(--font-weight-semibold);
-  border-left: none; 
-}
-.sidebar-nav a.active:hover, .sidebar-nav button.active:hover {
-    color: var(--cor-primaria); 
-    background-color: var(--bg-sidebar-active);
-}
-
-.sidebar-nav a span {
-    display: flex; align-items: center; justify-content: space-between; width: 100%;
-}
-.arrow-icon-right { width: 0.7rem; height: 0.7rem; }
-
-.app-header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: 50px;
-    background-color: var(--cor-primaria);
-    color: var(--bg-light);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 var(--spacing-lg); 
-    z-index: 1000;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); 
-    padding-left: 250px; 
-}
-
-.header-logo {
-    font-size: var(--font-size-h6);
-    font-weight: var(--font-weight-semibold);
-    color: var(--bg-light);
-    display: flex; align-items: center; height: 100%;
-    width: auto; padding-left: 0; overflow: hidden; 
-}
-.logo-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-.header-profile {
-    display: flex; align-items: center; gap: var(--spacing-md);
-    padding-right: var(--spacing-lg); 
-}
-
-.header-profile-links a {
-    color: var(--bg-light); margin-left: var(--spacing-md); font-size: 0.9rem;
-}
-
-.profile-pic {
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    border: 2px solid var(--bg-light);
-    background-color: #6c757d; 
-}
-
-.card-grid, .card-grid-bottom {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-lg); margin-top: var(--spacing-md);
-}
-.card-grid-bottom { flex-grow: 1; }
-
-.card {
-    background-color: light-dark(var(--bg-light), #333);
-    border: 1px solid light-dark(var(--border-color), #444);
-    border-radius: 0.25rem; 
-    padding: var(--spacing-md); 
-    display: flex; flex-direction: column; flex-grow: 1;
-}
-
-.card-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: var(--spacing-md); padding-bottom: var(--spacing-sm);
-}
-.card-title {
-    font-size: var(--font-size-h5); font-weight: var(--font-weight-semibold);
-    color: var(--text-dark); margin: 0;
-}
-.card-icon-button {
-    border: none; background: none; color: var(--text-light);
-    cursor: pointer; font-size: 1.25rem;
-}
-
-.card-empty-content, .card-empty-content-large {
-    display: flex; align-items: center; justify-content: center;
-    flex-grow: 1; color: var(--text-light); font-style: italic;
-}
-.card-empty-content { min-height: 100px; }
-.card-empty-content-large { min-height: 250px; }
-
-/* Make the Lista de Requerimentos panel stretch when empty by creating a
-   vertical flex chain: panel -> card -> card-content -> empty-state */
-.req-panel-lista {
-  display: flex;
-  flex-direction: column;
-  /* Aim to occupy the available viewport height under the header */
-  min-height: calc(100vh - 70px);
-}
-/* Card within the list panel becomes a flex column and grows */
-.req-panel-lista .card {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  min-height: 0; /* allow children to shrink properly */
-}
-/* Card content also grows and stacks children vertically */
-.req-panel-lista .card-content {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  min-height: 0;
-  gap: var(--spacing-md);
-}
-/* Empty state and info box participate in flex growth and center content */
-.req-panel-lista .multibanco-info,
-.req-panel-lista .card-empty-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1 1 auto;
-  min-height: 0;
-  margin-bottom: 0; /* spacing handled by card-content gap above */
-}
-/* Ensure the empty content does not keep a fixed min-height that blocks flexing */
-.req-panel-lista .card-empty-content { min-height: 0; }
-
-/* Make active tab panels use flex layout (override inline page styles that set display:block) */
-#tab-lista:checked ~ .req-panels .req-panel-lista,
-#tab-submeter:checked ~ .req-panels .req-panel-submeter {
-  display: flex !important;
-  flex-direction: column;
-}
-
-.payment-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-.payment-table th, .payment-table td {
-    padding: var(--spacing-sm); text-align: left;
-    border-bottom: 1px solid light-dark(var(--border-color), #353535);
-}
-.payment-table th {
-    background-color: light-dark(var(--bg-lighter), #444); 
-    position: sticky; top: 0; 
-}
-.payment-table .text-right { text-align: right; }
-
-.multibanco-info {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    background-color: light-dark(var(--bg-lighter), #444);
-    padding: var(--spacing-sm);
-    border-radius: 0.25rem;
-    margin-bottom: var(--spacing-md);
-    font-size: 0.9rem;
-    border: 1px solid light-dark(var(--border-color), #666); 
-}
-
-.notices-card .card-content {
-    max-height: 300px; overflow-y: auto; padding-right: var(--spacing-sm); flex-grow: 1;
-}
-.notices-card ul { list-style: none; padding: 0; margin: 0; }
-.notices-card li { margin-bottom: var(--spacing-sm); border-bottom: 1px dotted var(--border-color); padding-bottom: 5px; }
-.notices-card li a { display: block; font-size: 0.9rem; color: light-dark(var(--text-dark), #ddd); }
-.notices-card li a strong { color: var(--cor-perigo); }
-
-/* ---- MOBILE COM TEXTO VISÍVEL ---- */
-@media (max-width: 768px) {
-    .sidebar {
-        /* Largura suficiente para mostrar o texto e ícone */
-        width: 170px; 
-        position: fixed;
-        top: 50px; left: 0; bottom: 60px;
-        padding-top: 0; overflow-y: auto; z-index: 900;
-    }
-    .main-content {
-  margin-left: 170px; /* empurra o conteúdo para não ficar por baixo da sidebar */
-  padding: var(--spacing-md);
-  margin-bottom: 60px; /* evita sobreposição com o footer */
-}
-
-    .site-footer {
-      position: relative; /* cria contexto para z-index */
-      z-index: 1100; /* garante que o footer aparece acima da sidebar */
-    }
-
-    
-    .sidebar-header {
-        height: 40px; padding: 5px;
-        display: flex; align-items: center; justify-content: center;
-    }
-    .sidebar-header h3 { font-size: 1rem; margin: 0; }
-
-    .app-header {
-        /* O cabeçalho é empurrado a mesma largura da sidebar */
-        padding-left: 170px; 
-    }
-    .header-profile-links { display: none; } 
-    .profile-info { display: none; }
-    
-    .page-content {
-        padding-left: var(--spacing-md);
-        padding-right: var(--spacing-md);
-    }
-
-    /* Agora mostramos o texto! */
-    .sidebar-nav a {
-        padding: 10px 15px;
-        justify-content: flex-start; /* Alinha à esquerda */
-    }
-    .sidebar-nav a span {
-        display: flex; /* Mostra o texto */
-    }
-    .arrow-icon-right { display: block; } /* Mostra as setas */
-
-    /* Cards ocupam toda a largura disponível */
-    .card-grid, .card-grid-bottom {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Submenu settings (migrated from submenus.css) */
-/* Make li the positioning context for its submenu panel */
+.sidebar-nav ul { list-style: none; padding: 0; margin: 0; }
 .sidebar-nav li { position: relative; }
 
-.submenu-panel {
-  display: none;            /* escondido por defeito */
-  position: static;         /* flui dentro da sidebar */
-  left: auto;
-  top: auto;
-  transform: none;
-  box-shadow: none;
-  border-radius: 0.25rem;
-  max-width: none;
-  width: 100%;
-  padding: 0.5rem 1rem;
-  background-color: var(--bg-lighter);
-  border: 1px solid var(--border-color);
-}
-
-
-/* Show submenu when its id is targeted via fragment (#submenu-... ) */
-.submenu-panel:target {
-  display: block;
-}
-
-/* Toggle control (checkboxes—click again to close) */
-.submenu-toggle {
-  position: absolute; /* visually hidden but in DOM order */
-  left: -9999px;
-  opacity: 0;
-  width: 1px; height: 1px; overflow: hidden;
-}
-
-/* When checked, show the adjacent panel (works for checkboxes) */
-.submenu-toggle:checked + label + .submenu-panel {
-  display: block;
-}
-
-/* Labels should behave visually like buttons */
+.sidebar-nav a,
+.sidebar-nav button,
 .sidebar-nav label.has-submenu {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
   padding: var(--spacing-sm) var(--spacing-lg);
-  color: light-dark(var(--text-dark), #ddd);
+  color: var(--text-dark);
   transition: var(--transition-fast);
   font-size: 0.95rem;
   font-weight: var(--font-weight-medium);
@@ -464,248 +182,147 @@ a:hover {
   cursor: pointer;
 }
 
-.sidebar-nav label.has-submenu:focus {
-  outline: 2px solid rgba(0,86,160,0.15);
-  box-shadow: 0 0 0 3px rgba(0,86,160,0.06);
-  border-radius: 4px;
+/* Hover / active */
+.sidebar-nav a:hover,
+.sidebar-nav button:hover {
+  background-color: var(--bg-lighter);
+  color: var(--cor-primaria);
 }
-
-/* Visually reflect open state when checked */
-.submenu-toggle:checked + label {
+.sidebar-nav a.active,
+.sidebar-nav button.active {
   background-color: var(--bg-sidebar-active);
   color: var(--cor-primaria);
   font-weight: var(--font-weight-semibold);
 }
 
-
-.submenu-panel a {
-  display: block;
-  padding: 0.4rem 0.6rem;
-  color: var(--text-dark);
-  text-decoration: none;
-  border-radius: 3px;
-}
-
-.submenu-panel a:hover {
-  background-color: var(--bg-lighter);
-  color: var(--cor-primaria);
-}
-
-
-/* Small screens: make submenu flow in the document so it pushes items (no overlap) */
-@media (max-width: 768px) {
-  .logo-text {
-    display: none;   /* esconde o texto InfoAlunos */
-  }
-
-  .main-content { padding-top: calc(50px + var(--spacing-md)); }
-
-  .header-profile-links {
-    display: flex;   /* garante que os links aparecem */
-    gap: 0.5rem;
-    font-size: 0.85rem; /* podes reduzir ligeiramente o tamanho */
-  }
-}
-
-.header-profile-links a {
-  position: relative;
-  transition: color 0.3s ease;
-}
-.header-profile-links a::after {
-  content: "";
-  position: absolute;
-  bottom: -3px;
-  left: 0;
-  width: 0%;
-  height: 2px;
-  background: var(--bg-light);
-  transition: width 0.3s ease;
-}
-.header-profile-links a:hover {
-  color: var(--cor-aviso);
-}
-.header-profile-links a:hover::after {
+/* Submenu (CSS-only toggle via checkbox or fragment) */
+.submenu-panel {
+  display: none;
+  position: static;
   width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: var(--bg-lighter);
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+.submenu-panel:target { display: block; }
+.submenu-toggle { position: absolute; left: -9999px; opacity: 0; width: 1px; height: 1px; overflow: hidden; }
+.submenu-toggle:checked + label { background-color: var(--bg-sidebar-active); color: var(--cor-primaria); font-weight: var(--font-weight-semibold); }
+.submenu-toggle:checked + label + .submenu-panel { display: block; }
+
+/* Icon sizing inside nav (consistent) */
+.sidebar-nav .nav-icon,
+.sidebar-nav svg,
+.sidebar-nav img,
+.sidebar-nav i {
+  width: 20px !important;
+  height: 20px !important;
+  font-size: 20px !important;
+  line-height: 1 !important;
+  display: inline-block !important;
+  object-fit: contain !important;
+  flex-shrink: 0 !important;
+  vertical-align: middle;
+  margin-right: 0.5rem;
 }
 
-.site-footer {
-  grid-column: 1 / -1;               /* ocupa toda a largura do grid */
-  background-color: var(--cor-primaria);
-  color: var(--bg-light);
-  text-align: center;
-  font-size: 0.7rem;                 /* mais fino */
-  padding: 0.4rem 0.5rem;            /* altura reduzida */
-  border-top: 1px solid var(--border-color);
-  margin-top: auto;                 /* empurra para o fundo se houver espaço */
+/* =========================
+   Main content + cards + grids
+   ========================= */
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+  padding: calc(50px + var(--spacing-md)) var(--spacing-lg);
+  width: 100%;
+  min-width: 0;
+  align-self: stretch;
+  box-sizing: border-box;
+  margin: 0; /* controlado por responsive rules abaixo */
 }
 
-.site-footer a {
-  color: var(--bg-light);
-  text-decoration: underline;
-}
-.footer-meta {
-  font-style: italic;
-  opacity: 0.8;
-}
-
-
-@container (min-width: 600px) {
-  .card {
-    grid-column: span 2;
-  }
-}
-
-@supports (animation-timeline: auto) {
-  :root {
-    /* Define um âmbito de timeline para poder usar nomes custom */
-    timeline-scope: --page;
-  }
-
-  html {
-    /* Cria uma scroll timeline associada ao documento */
-    scroll-timeline-name: --page;
-    scroll-timeline-axis: block; /* usa o eixo vertical */
-  }
-
-  .app-header {
-    animation: fadeHeader 1s linear both;
-    animation-timeline: --page;             /* liga à timeline definida */
-    animation-range: entry 0% exit 100%;    /* de quando entra até sair do viewport */
-  }
-
-  @keyframes fadeHeader {
-    from { opacity: 1; }
-    to   { opacity: 0.8; }
-  }
-}
-
-@keyframes fadeHeader {
-  from { opacity: 1; }
-  to { opacity: 0.8; }
-}
-
-.error-page {
+/* Cards */
+.card {
+  background-color: var(--bg-light);
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
+  padding: var(--spacing-md);
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  box-shadow: var(--shadow-sm);
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  text-align: center;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
 }
-.error-page h1 {
-  font-size: var(--font-size-h1);
-  color: var(--cor-perigo);
+.card-title { font-size: var(--font-size-h5); font-weight: var(--font-weight-semibold); color: var(--text-dark); margin: 0; }
+.card-content { font-size: 0.95rem; color: var(--text-light); }
+
+/* Grid helpers */
+.card-grid, .card-grid-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-md);
 }
+.card-grid-bottom { flex-grow: 1; }
 
-input:user-valid {
-  border: 2px solid var(--cor-sucesso);
+/* Utilities */
+.text-center { text-align: center; }
+.mt-0 { margin-top: 0; }
+.mt-sm { margin-top: var(--spacing-sm); }
+.mb-sm { margin-bottom: var(--spacing-sm); }
+.hide-mobile { display: none; }
+.show-mobile { display: none; }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: var(--cor-primaria);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
 }
-input:user-invalid {
-  border: 2px solid var(--cor-perigo);
+.btn.secondary { background: var(--cor-secundaria); color: #fff; }
+
+/* Tables */
+.payment-table, table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
 }
+.payment-table th, .payment-table td, th, td {
+  padding: var(--spacing-sm);
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+.payment-table th { background-color: var(--bg-lighter); position: sticky; top: 0; }
 
-.req-tabs { display: flex; gap: 0.5rem; border-bottom: 1px solid var(--border-color); margin-bottom: var(--spacing-md); }
-          .req-tab { padding: 0.5rem 1rem; background: none; border: 1px solid var(--border-color); border-bottom: none; border-radius: 4px 4px 0 0; cursor: pointer; }
-          .req-tab:hover { background: var(--bg-lighter); }
-          .req-tab-radio { position: absolute; left: -9999px; }
-          .req-panels { min-height: 200px; }
-          .req-panel { display: none; }
-          #tab-lista:checked ~ .req-panels .req-panel-lista { display: block; }
-          #tab-submeter:checked ~ .req-panels .req-panel-submeter { display: block; }
-          /* Active tab visual */
-          #tab-lista:checked ~ .req-tabs label[for="tab-lista"],
-          #tab-submeter:checked ~ .req-tabs label[for="tab-submeter"] {
-            background-color: var(--bg-light);
-            color: var(--cor-primaria);
-            border-bottom: 1px solid var(--bg-light);
-            font-weight: var(--font-weight-semibold);
-          }
+/* Wrapper for wide tables */
+.table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
-  .raides-section-title {
-    color: var(--cor-primaria);
-    font-size: 0.9rem;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-  }
-  .raides-section-title span {
-    background: var(--cor-primaria);
-    color: white;
-    border-radius: 50%;
-    width: 22px;
-    height: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
-    font-size: 0.7rem;
-  }
-  .raides-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px 20px;
-    align-items: center;
-  }
-  .raides-grid label { font-size: 0.85rem; color: var(--text-dark); font-weight: 500; }
-  .raides-grid select { padding: 6px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 0.85rem; background: #fff; }
-  .raides-parent-sub {
-    grid-column: 1/-1;
-    font-weight: bold;
-    font-size: 0.8rem;
-    color: var(--cor-primaria);
-    text-transform: uppercase;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 3px;
-    margin-bottom: 5px;
-  }
-  @media (max-width: 800px) { .raides-grid { grid-template-columns: 1fr; } }
+/* Notices and lists */
+.notices-card .card-content { max-height: 300px; overflow-y: auto; padding-right: var(--spacing-sm); flex-grow: 1; }
+.notices-card ul { list-style: none; padding: 0; margin: 0; }
+.notices-card li { margin-bottom: var(--spacing-sm); border-bottom: 1px dotted var(--border-color); padding-bottom: 5px; }
+.notices-card li a { display: block; font-size: 0.9rem; color: var(--text-dark); }
+.notices-card li a strong { color: var(--cor-perigo); }
 
-    /* Lógica de Visibilidade CSS Puro */
-    .req-panel { display: none !important; }
-    #tab-novo:checked ~ .card #content-novo,
-    #tab-plano:checked ~ .card #content-plano,
-    #tab-doc:checked ~ .card #content-doc { display: block !important; }
-
-    /* Estilo Ativo das Labels do teu styles.css */
-    #tab-novo:checked ~ .req-tabs label[for="tab-novo"],
-    #tab-plano:checked ~ .req-tabs label[for="tab-plano"],
-    #tab-doc:checked ~ .req-tabs label[for="tab-doc"] {
-        background-color: var(--bg-light) !important;
-        color: var(--cor-primaria) !important;
-        border-bottom: 1px solid var(--bg-light);
-        font-weight: var(--font-weight-bold);
-    }
-
-    /* Ajustes para o styles.css do usuário */
-    .main-content {
-        padding: 20px;
-        font-family: var(--font-family, sans-serif);
-    }
-
-    table thead th {
-        font-weight: bold;
-        color: #333;
-    }
-
-    table tbody tr:hover {
-        background-color: #f9f9f9 !important;
-    }
-
-    a:hover {
-        text-decoration: underline !important;
-    }
-
- 
-    /* Aplicando sombras e estados do teu styles.css se necessário */
-    .card {
-        box-shadow: var(--shadow-sm);
-    }
-    button:not(:disabled):hover {
-        opacity: 0.9;
-    }
-
-    .calendar-header {
+/* Calendar */
+.calendar-header {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   background: var(--bg-lighter);
@@ -714,111 +331,512 @@ input:user-invalid {
   font-weight: var(--font-weight-semibold);
   font-size: 0.85rem;
 }
+.calendar-header div { padding: 6px; text-align: center; border-right: 1px solid var(--border-color); }
+.calendar-header div:last-child { border-right: none; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-top: var(--spacing-sm); }
+.calendar-day { min-height: 90px; background: linear-gradient(135deg,#f6f6f6,#eaeaea); border-radius:4px; padding:6px; font-size:0.85rem; color:var(--text-light); position:relative; }
+.calendar-day span { position:absolute; bottom:6px; right:6px; font-size:0.8rem; opacity:0.8; }
 
-.calendar-header div {
-  padding: 6px;
-  text-align: center;
-  border-right: 1px solid var(--border-color);
-}
+/* Two-columns helper */
+.two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); }
+.section-title { font-size: 0.9rem; font-weight: var(--font-weight-bold); margin-bottom: var(--spacing-sm); }
+.subsection-title { font-size: 0.8rem; font-weight: var(--font-weight-semibold); margin: var(--spacing-md) 0 var(--spacing-sm); }
 
-.calendar-header div:last-child {
-  border-right: none;
-}
+/* Error page */
+.error-page { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; text-align:center; }
+.error-page h1 { font-size: var(--font-size-h1); color: var(--cor-perigo); }
 
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
-  margin-top: var(--spacing-sm);
-}
+/* Tabs: pure CSS toggle */
+.req-tabs { display:flex; gap:0.5rem; border-bottom:1px solid var(--border-color); margin-bottom: var(--spacing-md); }
+.req-tab { padding:0.5rem 1rem; background:none; border:1px solid var(--border-color); border-bottom:none; border-radius:4px 4px 0 0; cursor:pointer; }
+.req-tab:hover { background: var(--bg-lighter); }
+.req-tab-radio { position:absolute; left:-9999px; }
+.req-panels { min-height:200px; }
+.req-panel { display:none; }
+/* show panel when radio checked */
+#tab-lista:checked ~ .req-panels .req-panel-lista,
+#tab-submeter:checked ~ .req-panels .req-panel-submeter { display:block; }
 
-.calendar-day {
-  min-height: 90px;
-  background: linear-gradient(135deg, #f6f6f6, #eaeaea);
-  border-radius: 4px;
-  padding: 6px;
-  font-size: 0.85rem;
-  color: var(--text-light);
-  position: relative;
-}
-
-.calendar-day span {
-  position: absolute;
-  bottom: 6px;
-  right: 6px;
-  font-size: 0.8rem;
-  opacity: 0.8;
-}
-
-.calendar-day.empty {
-  background: transparent;
-}
-
-.two-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-lg);
-}
-
-.section-title {
-  font-size: 0.9rem;
-  font-weight: var(--font-weight-bold);
-  margin-bottom: var(--spacing-sm);
-}
-
-.subsection-title {
-  font-size: 0.8rem;
+/* Visual active state for tabs */
+#tab-lista:checked ~ .req-tabs label[for="tab-lista"],
+#tab-submeter:checked ~ .req-tabs label[for="tab-submeter"] {
+  background-color: var(--bg-light);
+  color: var(--cor-primaria);
+  border-bottom: 1px solid var(--bg-light);
   font-weight: var(--font-weight-semibold);
-  margin: var(--spacing-md) 0 var(--spacing-sm);
 }
 
-.info-box {
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-  font-size: 0.8rem;
-  color: var(--text-light);
-  background: light-dark(var(--bg-lighter), #444);
-  border: 1px solid var(--border-color);
-  padding: 6px 8px;
-  border-radius: 4px;
-  margin-bottom: var(--spacing-sm);
+/* Inputs valid/invalid */
+input:valid { border: 2px solid var(--cor-sucesso); }
+input:invalid { border: 2px solid var(--cor-perigo); }
+
+/* Accessibility / Focus */
+a:focus, button:focus, .sidebar-nav a:focus {
+  outline: 3px solid rgba(0,86,160,0.15);
+  outline-offset: 2px;
 }
 
-.info-icon {
-  font-size: 0.9rem;
-  line-height: 1;
-}
+/* =========================
+   Responsive
+   ========================= */
 
-/* Responsivo */
-@media (max-width: 768px) {
-  .two-columns {
+/* <= 992px: topbar behavior (sidebar flows to top; topbar not fixed; content centered) */
+@media (max-width: 992px) {
+  :root { --topbar-height: 56px; } /* ajuste possível conforme altura real */
+
+  .app-container {
     grid-template-columns: 1fr;
+    justify-items: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Sidebar becomes topbar in flow */
+  .sidebar {
+    position: relative !important;
+    width: 100% !important;
+    padding-top: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    display: block;
+    z-index: 900;
+  }
+
+  /* Topbar nav: horizontal, scrollable if many items */
+  .sidebar-nav {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.25rem;
+    justify-content: center;
+    align-items: center;
+    scroll-behavior: smooth;
+  }
+  .sidebar-nav ul { display: flex; gap: 0.25rem; padding: 0; margin: 0; align-items: center; }
+  .sidebar-nav li { display: inline-flex; }
+
+  /* stack icon+label for compactness in topbar (change to row if prefer) */
+  .sidebar-nav a,
+  .sidebar-nav button,
+  .sidebar-nav label.has-submenu {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.35rem 0.5rem;
+    text-align: center;
+    white-space: nowrap;
+    min-width: 56px;
+    flex: 0 0 auto;
+  }
+
+  .sidebar-nav .nav-icon,
+  .sidebar-nav svg,
+  .sidebar-nav img,
+  .sidebar-nav i {
+    width: 20px !important;
+    height: 20px !important;
+    font-size: 20px !important;
+    margin-right: 0 !important;
+    margin-bottom: 0.25rem !important;
+    display: block !important;
+  }
+
+  /* Submenus open via checkbox-toggle: display:block pushes content down (no overlay) */
+  .submenu-panel { display: none; position: static !important; }
+  .submenu-toggle:checked + label + .submenu-panel { display: block; }
+  .submenu-panel:target { display: block; }
+
+  /* Main content centered and constrained */
+  .main-content {
+    width: 100%;
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+    /* header fixed (50px) + topbar in flow (--topbar-height) */
+    padding-top: calc(50px + var(--topbar-height) + var(--spacing-sm)) !important;
+    box-sizing: border-box;
+    min-width: 0;
+    overflow: visible;
+  }
+
+  /* Ensure children don't force overflow */
+  .main-content, .main-content > *, .card, .card * { min-width: 0; word-break: break-word; }
+
+  /* Images/tables responsive */
+  .main-content img, .card img, img.responsive, table { max-width: 100%; height: auto; display: block; }
+  .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* z-index: header above topbar */
+  .app-header { z-index: 1000; }
+  .sidebar { z-index: 900; }
+}
+
+/* <= 768px: legacy compact sidebar fixed at 170px (keeps older behaviour where used) */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 170px;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    bottom: 60px;
+    padding-top: 0;
+    overflow-y: auto;
+    z-index: 900;
+  }
+  .main-content { margin-left: 170px; padding: var(--spacing-md); margin-bottom: 60px; }
+  .app-header { padding-left: 170px; }
+  .header-profile-links { display: none; }
+  .profile-info { display: none; }
+  .logo-text { display: none; }
+  .card-grid, .card-grid-bottom { grid-template-columns: 1fr; }
+  .sidebar-nav a { padding: 10px 15px; justify-content:flex-start; }
+  .arrow-icon-right { display: block; }
+}
+
+/* <= 480px: small device tweaks */
+@media (max-width: 480px) {
+  :root { --topbar-height: 56px; } /* manter consistência */
+  .app-header { height: 48px; padding: 0.25rem 0.75rem; }
+  .header-logo { font-size: 0.95rem; }
+  .header-profile-links { display: none; }
+  .sidebar { position: relative; width: 100%; padding-top: 0; border-bottom: 1px solid var(--border-color); }
+  .sidebar-header h3 { font-size: 1rem; }
+  .profile-pic { width: 35px; height: 35px; }
+  .sidebar-nav a, .sidebar-nav label.has-submenu { font-size: 0.95rem; padding: 0.5rem 0.75rem; }
+  .card-title { font-size: 0.95rem; }
+  .card-content, table { font-size: 0.8rem; }
+  th, td { padding: 0.45rem; }
+  .header-left { flex-direction: column; align-items:flex-start; gap:0.5rem; }
+
+  /* main-content horizontal padding for small screens */
+  .main-content { padding-left: 0.75rem; padding-right: 0.75rem; padding-top: calc(50px + var(--topbar-height) + 0.25rem) !important; }
+  .sidebar-nav a, .sidebar-nav button, .sidebar-nav label.has-submenu { padding: 0.3rem 0.45rem; min-width: 48px; }
+}
+
+/* =========================
+   Feature queries / advanced
+   ========================= */
+@supports (animation-timeline: auto) {
+  :root { timeline-scope: --page; }
+  html { scroll-timeline-name: --page; scroll-timeline-axis: block; }
+  .app-header {
+    animation: fadeHeader 1s linear both;
+    animation-timeline: --page;
+    animation-range: entry 0% exit 100%;
+  }
+  @keyframes fadeHeader { from { opacity: 1; } to { opacity: 0.8; } }
+}
+@keyframes fadeHeader { from { opacity: 1; } to { opacity: 0.8; } }
+
+/* =========================
+   Footer / small utilities
+   ========================= */
+.header-profile-links a { color: var(--bg-light); position: relative; transition: color 0.3s ease; }
+.header-profile-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -3px; left: 0;
+  width: 0%; height: 2px;
+  background: var(--bg-light);
+  transition: width 0.3s ease;
+}
+.header-profile-links a:hover { color: var(--cor-aviso); }
+.header-profile-links a:hover::after { width: 100%; }
+
+.site-footer {
+  grid-column: 1 / -1;
+  background-color: var(--cor-primaria);
+  color: var(--bg-light);
+  text-align: center;
+  font-size: 0.75rem;
+  padding: 0.4rem 0.5rem;
+  border-top: 1px solid var(--border-color);
+  margin-top: auto;
+}
+.site-footer a { color: var(--bg-light); text-decoration: underline; }
+.footer-meta { font-style: italic; opacity: 0.8; }
+
+/* Small helpers for responsive icons when stacked */
+.sidebar-nav .nav-icon-stack {
+  margin-right: 0 !important;
+  margin-bottom: 0.25rem !important;
+}
+
+/* Final safety: ensure main areas don't force horizontal scroll */
+html, body { overflow-x: hidden; }
+
+/* ===== Patch: evita corte à direita (reaplica regras de segurança contra overflow) ===== */
+
+/* Forçar filhos de grids/flex a poderem encolher */
+.app-container,
+.main-content,
+.card,
+.card *,
+.sidebar,
+.sidebar * {
+  min-width: 0 !important;
+  box-sizing: border-box;
+}
+
+/* Main content: limita largura e centra, evita overflow forçado */
+.main-content {
+  width: 100%;
+  max-width: var(--content-max-width, 1100px);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Se existirem elementos com width fixa, assegura que não forçam toda a página */
+.main-content > * {
+  min-width: 0;
+}
+
+/* Tabelas/images largas: scroll interno, não forçar layout da página */
+.table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-responsive table,
+.main-content table { max-width: 100%; width: 100%; }
+
+/* Em breakpoints onde a sidebar fica no topo, garantir que o container não esconde conteúdo */
+@media (max-width: 992px) {
+  /* permite que o body não esconda áreas internas (mas sem permitir scroll horizontal desnecessário) */
+  html, body { overflow-x: hidden; }
+
+  /* se houver algum elemento que ainda esteja a forçar largura, permitir scroll interno no main */
+  .main-content { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* segurança extra para elementos que possam usar transform/scale */
+  .main-content, .main-content * { max-width: 100%; }
+}
+
+/* Se ainda houver um componente específico a forçar largura, podemos forçar overflow localizado:
+   exemplo: .meu-componente { overflow-x: auto; } */
+/* ===== Topbar: permitir wrap e evitar sobreposição (mobile) ===== */
+@media (max-width: 992px) {
+  /* Faz a sidebar comportar-se como topbar em fluxo e garante espaço abaixo do header fixo */
+  .sidebar {
+    position: relative !important;
+    width: 100% !important;
+    padding-top: 50px; /* reserva espaço para o header fixo */
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  /* Topbar: permite várias linhas (wrap) em vez de rolar horizontalmente */
+  .sidebar-nav {
+    display: flex;
+    flex-wrap: wrap;           /* <-- permite ir para baixo */
+    gap: 0.25rem 0.5rem;       /* linha e coluna gap */
+    align-items: center;
+    justify-content: flex-start; /* ou center se preferires */
+    padding: 0.25rem var(--spacing-sm);
+    overflow-x: visible;       /* não forçar scroll horizontal */
+  }
+
+  /* Lista interna também permite wrap */
+  .sidebar-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+  }
+
+  /* Cada item fica em linha (ícone à esquerda, texto à direita) e pode quebrar para próxima linha */
+  .sidebar-nav li { display: inline-flex; }
+  .sidebar-nav a,
+  .sidebar-nav button,
+  .sidebar-nav label.has-submenu {
+    display: inline-flex;
+    flex-direction: row;       /* ícone à esquerda do texto (mudar para column se preferires empilhar) */
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.5rem;
+    white-space: nowrap;       /* evita quebra dentro do rótulo; o wrap ocorre entre itens */
+    flex: 0 1 auto;            /* items encolhem se necessário e vão para a linha seguinte */
+    min-width: 0;
+  }
+
+  /* Ícones alinhados à esquerda do texto (pequeno ajuste visual) */
+  .sidebar-nav .nav-icon,
+  .sidebar-nav svg,
+  .sidebar-nav img,
+  .sidebar-nav i {
+    margin-right: 0.5rem !important;
+    margin-bottom: 0 !important;
+    width: 20px !important;
+    height: 20px !important;
+    display: inline-block !important;
+  }
+
+  /* Garanta que submenus (se abertos via checkbox) empurrem conteúdo para baixo */
+  .submenu-toggle:checked + label + .submenu-panel,
+  .submenu-panel:target {
+    display: block;
+  }
+
+  /* Main content fica abaixo do header+topbar sem ficar cortado:
+     como a topbar agora está em fluxo (não fixa) o seu próprio height empurra o main.
+     Mantemos um pequeno padding adicional para segurança. */
+  .main-content {
+    width: 100%;
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+    padding-top: calc(50px + var(--spacing-sm)) !important; /* 50px do header fixo + margem */
+    box-sizing: border-box;
+  }
+}
+/* =========================
+   Header: mostrar só os 3 links prioritários em mobile e sempre centrados
+   - Preferência: marca os 3 anchors importantes com class="priority"
+   - Fallback: se não alterares HTML, mostra os 3 últimos filhos
+   ========================= */
+
+@media (max-width: 768px) {
+  /* Container centrado e com limite de largura para evitar que elementos forçem overflow */
+  .header-profile-links {
+    display: flex;
+    justify-content: center;    /* centra os itens */
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 0.75rem;         /* espaço lateral para não encostar às bordas */
+    box-sizing: border-box;
+    flex-wrap: wrap;            /* permite ir para linha de baixo se não couber tudo */
+    max-width: 100%;
+    margin: 0 auto;
+    /* opcional: limita a largura interna para melhorar leitura */
+    width: min(100%, 980px);
+  }
+
+  /* Esconder por defeito todos os filhos (links / botões / spans etc) */
+  .header-profile-links > * {
+    display: none !important;
+  }
+
+  /* 1) Preferido: mostra elementos marcados com .priority (mais robusto) */
+  .header-profile-links > .priority {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.5rem;
+    box-sizing: border-box;
+    white-space: nowrap;
+    flex: 0 1 auto; /* podem encolher se necessário, mas não forçam overflow */
+    min-width: 0;
+    font-size: clamp(0.85rem, 1.6vw, 1rem); /* fonte responsiva evita cortes */
+  }
+
+  /* 2) Fallback: se não usares .priority, mostra os 3 últimos elementos (ajusta se necessário) */
+  .header-profile-links > :nth-last-child(-n+3) {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.5rem;
+    box-sizing: border-box;
+    white-space: nowrap;
+    flex: 0 1 auto;
+    min-width: 0;
+    font-size: clamp(0.85rem, 1.6vw, 1rem);
+  }
+
+  /* Evita que o botão do lado direito seja cortado: permite wrap e centraliza todas as linhas */
+  .header-profile-links {
+    align-content: center; /* centra linhas quando houver wrap */
+    justify-content: center;
+  }
+
+  /* Ajustes para ecrãs muito pequenos */
+  @media (max-width: 420px) {
+    .header-profile-links > .priority,
+    .header-profile-links > :nth-last-child(-n+3) {
+      padding: 0.2rem 0.35rem;
+      font-size: clamp(0.78rem, 2.2vw, 0.92rem);
+      gap: 0.3rem;
+    }
+    .header-profile-links { padding: 0 0.5rem; gap: 0.35rem; }
   }
 }
 
-.text-center {
-  text-align: center;
+/* Segurança: no desktop/telas grandes mostramos tudo normalmente (sem alterações) */
+@media (min-width: 769px) {
+  .header-profile-links > * { display: inline-flex !important; }
+  .header-profile-links { flex-wrap: nowrap; padding: 0; justify-content: flex-end; } /* manter original */
+}
+/* Ajuste responsivo: encolher texto e espaçamento para evitar que apenas 1 botão apareça */
+@media (max-width: 768px) {
+  .header-profile-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0 0.5rem;
+    box-sizing: border-box;
+    flex-wrap: nowrap; /* preferimos encolher texto antes de quebrar linhas */
+    width: 100%;
+  }
+
+  /* Garantir que os filhos podem encolher sem forçar overflow */
+  .header-profile-links > * {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: 0;           /* permite encolher */
+    flex: 0 1 auto;         /* podem encolher, mas não esticam demasiado */
+    padding: 0.18rem 0.45rem;
+    white-space: nowrap;
+    /* fonte responsiva: diminui com a viewport, porém mantém legibilidade */
+    font-size: clamp(0.78rem, 1.6vw, 1rem);
+  }
+
+  /* prioridade: aplica o mesmo comportamento aos marcados com .priority */
+  .header-profile-links > .priority {
+    font-size: clamp(0.78rem, 1.6vw, 1rem);
+    padding: 0.18rem 0.45rem;
+  }
+
+  /* ajustes para larguras ainda menores: reduzir mais a fonte e padding */
+  @media (max-width: 520px) {
+    .header-profile-links > *,
+    .header-profile-links > .priority {
+      font-size: clamp(0.72rem, 2.0vw, 0.92rem);
+      padding: 0.14rem 0.35rem;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .header-profile-links > *,
+    .header-profile-links > .priority {
+      font-size: clamp(0.68rem, 2.4vw, 0.88rem);
+      padding: 0.12rem 0.3rem;
+      gap: 0.3rem;
+    }
+  }
+
+  /* último recurso: se mesmo assim faltar espaço, permitimos wrap mas mantemos texto pequeno */
+  @media (max-width: 340px) {
+    .header-profile-links { flex-wrap: wrap; gap: 0.25rem; }
+    .header-profile-links > *,
+    .header-profile-links > .priority {
+      font-size: 0.78rem;
+      padding: 0.1rem 0.28rem;
+    }
+  }
 }
 
-.table-note {
-  font-size: 0.75rem;
-  color: var(--text-light);
-  margin-top: var(--spacing-sm);
+/* Mantém comportamento desktop sem alterações */
+@media (min-width: 769px) {
+  .header-profile-links { flex-wrap: nowrap; padding: 0; }
+  .header-profile-links > * { display: inline-flex !important; font-size: 1rem; padding: 0 0.5rem; }
 }
-
-.uc-header {
-  font-size: 0.8rem;
-  font-weight: var(--font-weight-semibold);
-  margin-bottom: var(--spacing-md);
-  padding: 6px 8px;
-  background: light-dark(var(--bg-lighter), #444);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-}
-
-
-    
-
-
-
