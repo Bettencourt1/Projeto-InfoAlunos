@@ -212,13 +212,146 @@
 
 		<!-- Main content -->
 		<main class="main-content page-content">
-			<div class="card">
-				<div class="card-header"><h4 class="card-title">Ficheiros da Disciplina</h4></div>
-				<div class="card-content">
-					<p>Lista de ficheiros da disciplina será colocada aqui.</p>
-				</div>
-			</div>
-		</main>
+
+  <!-- Pesquisa de Disciplinas -->
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">Pesquisa de Disciplinas</h2>
+    </div>
+    <div class="card-content">
+      <form class="two-columns" style="gap: var(--spacing-md);">
+        <div>
+          <label for="ano-letivo" class="subsection-title">Ano Letivo:</label>
+          <select id="ano-letivo" name="ano-letivo" required>
+            <option value="2023/24" selected>2023/24</option>
+            <option value="2022/23">2022/23</option>
+            <option value="2021/22">2021/22</option>
+          </select>
+        </div>
+        <div>
+          <label for="disciplina" class="subsection-title">Disciplina:</label>
+          <select id="disciplina" name="disciplina" required>
+            <option selected>Técnicas de Expressão do Português CTSP TPSI | S1</option>
+            <option>Matemática Aplicada CTSP TPSI | S1</option>
+            <option>Programação Web CTSP TPSI | S1</option>
+          </select>
+        </div>
+      </form>
+      <div class="text-center mt-sm">
+        <button type="submit" class="btn">Pesquisar...</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs: Ficheiros na Disciplina -->
+  <div class="card mt-sm">
+    <div class="card-header">
+      <h2 class="card-title">Ficheiros na Disciplina</h2>
+    </div>
+    <div class="card-content">
+
+      <div class="req-tabs-wrapper">
+        <!-- radios -->
+        <input type="radio" name="ficheiros-tab" id="tab-docentes" class="req-tab-radio" checked>
+        <input type="radio" name="ficheiros-tab" id="tab-aluno" class="req-tab-radio">
+
+        <!-- labels -->
+        <div class="req-tabs">
+          <label for="tab-docentes" class="req-tab">Ficheiros de Docentes na Disciplina</label>
+          <label for="tab-aluno" class="req-tab">Ficheiros do Aluno na Disciplina</label>
+        </div>
+
+        <!-- painéis -->
+        <div class="req-panels">
+
+          <!-- TAB 1: Ficheiros de Docentes na Disciplina -->
+          <div class="req-panel" id="painel-docentes">
+            <div class="card" style="box-shadow:none; border:none; padding:0;">
+              <div class="card-content">
+                <div style="display:flex; flex-wrap:wrap; gap:var(--spacing-md); margin-bottom:var(--spacing-md);">
+                  <div style="flex:1 1 220px;">
+                    <label for="categoria-docente">Filtrar por Categoria</label>
+                    <select id="categoria-docente" style="width:100%;">
+                      <option selected>Todos</option>
+                    </select>
+                  </div>
+                  <div style="align-self:flex-end;">
+                    <button class="btn">Filtrar Lista</button>
+                  </div>
+                </div>
+                <p style="color:var(--cor-info); font-size:0.9rem;">
+                  Não foram encontrados ficheiros para a seleção efetuada, escolha a disciplina!
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: Ficheiros do Aluno na Disciplina -->
+          <div class="req-panel" id="painel-aluno">
+            <div class="two-columns" style="align-items:flex-start; gap:var(--spacing-lg);">
+
+              <!-- Coluna esquerda: Criar/Atualizar ficheiro -->
+              <div>
+                <h3 class="section-title">Criar/Actualizar Ficheiro</h3>
+
+                <form style="display:grid; gap:var(--spacing-sm); font-size:0.9rem;">
+                  <div>
+                    <label for="ficheiro-aluno">Escolher ficheiro</label><br>
+                    <input type="file" id="ficheiro-aluno">
+                  </div>
+
+                  <div>
+                    <label for="categoria-aluno">*Categoria</label><br>
+                    <input type="text" id="categoria-aluno">
+                  </div>
+
+                  <div>
+                    <label for="descricao-aluno">*Descrição</label><br>
+                    <input type="text" id="descricao-aluno">
+                  </div>
+
+                  <div>
+                    <label for="observacoes-aluno">Observações</label><br>
+                    <textarea id="observacoes-aluno" rows="3"></textarea>
+                  </div>
+
+                  <p style="color:var(--cor-perigo); font-size:0.8rem; margin-top:var(--spacing-sm);">
+                    * Os campos assinalados são de preenchimento obrigatório; o ficheiro a enviar está limitado a 10 Mb.
+                  </p>
+
+                  <div style="display:flex; flex-wrap:wrap; gap:var(--spacing-sm); margin-top:var(--spacing-sm);">
+                    <button type="button" class="btn secondary" style="background:var(--cor-perigo);">
+                      Eliminar
+                    </button>
+                    <button type="reset" class="btn secondary" style="background:var(--cor-info);">
+                      Novo Ficheiro
+                    </button>
+                    <button type="submit" class="btn" style="background:var(--cor-sucesso);">
+                      Guardar
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- Coluna direita: Lista de ficheiros -->
+              <div>
+                <h3 class="section-title">Lista de ficheiros associados</h3>
+                <p style="color:var(--cor-info); font-size:0.9rem;">
+                  Não foram encontrados ficheiros para a selecção efectuada, escolha a disciplina!
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+        </div> <!-- .req-panels -->
+      </div> <!-- .req-tabs-wrapper -->
+
+    </div>
+  </div>
+
+</main>
+
 
 		<!-- Footer -->
 		<footer class="site-footer">

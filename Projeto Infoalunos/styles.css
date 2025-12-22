@@ -950,3 +950,39 @@ html, body { overflow-x: hidden; }
     font-size: 0.78rem;
   }
 }
+/* Mostrar o painel ativo */
+#tab-objetivos:checked ~ .req-panels #content-objetivos,
+#tab-biblio:checked ~ .req-panels #content-biblio,
+#tab-programa:checked ~ .req-panels #content-programa,
+#tab-outros:checked ~ .req-panels #content-outros,
+#tab-docente:checked ~ .req-panels #content-docente,
+#tab-documentos:checked ~ .req-panels #content-documentos {
+  display: block;
+}
+
+/* Estilo visual do tab ativo */
+#tab-objetivos:checked ~ .req-tabs label[for="tab-objetivos"],
+#tab-biblio:checked ~ .req-tabs label[for="tab-biblio"],
+#tab-programa:checked ~ .req-tabs label[for="tab-programa"],
+#tab-outros:checked ~ .req-tabs label[for="tab-outros"],
+#tab-docente:checked ~ .req-tabs label[for="tab-docente"],
+#tab-documentos:checked ~ .req-tabs label[for="tab-documentos"] {
+  background-color: var(--bg-light);
+  color: var(--cor-primaria);
+  border-bottom: 1px solid var(--bg-light);
+  font-weight: var(--font-weight-semibold);
+}
+/* Mostrar o painel correspondente */
+#tab-docentes:checked ~ .req-panels #painel-docentes,
+#tab-aluno:checked    ~ .req-panels #painel-aluno {
+  display: block;
+}
+
+/* Estilo do tab ativo */
+#tab-docentes:checked ~ .req-tabs label[for="tab-docentes"],
+#tab-aluno:checked    ~ .req-tabs label[for="tab-aluno"] {
+  background-color: var(--bg-light);
+  color: var(--cor-primaria);
+  border-bottom: 1px solid var(--bg-light);
+  font-weight: var(--font-weight-semibold);
+}

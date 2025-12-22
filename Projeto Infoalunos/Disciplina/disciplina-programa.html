@@ -213,11 +213,234 @@
 		<!-- Main content -->
 		<main class="main-content page-content">
 			<div class="card">
-				<div class="card-header"><h4 class="card-title">Ficheiros da Disciplina</h4></div>
-				<div class="card-content">
-					<p>Lista de ficheiros da disciplina será colocada aqui.</p>
-				</div>
-			</div>
+  <div class="card-header">
+    <h2 class="card-title">Pesquisa de Disciplinas</h2>
+  </div>
+  <div class="card-content">
+    <form class="two-columns" style="gap: var(--spacing-md);">
+      <div>
+        <label for="ano-letivo" class="subsection-title">Ano Letivo:</label>
+        <select id="ano-letivo" name="ano-letivo" required>
+          <option value="2023/24" selected>2023/24</option>
+          <option value="2022/23">2022/23</option>
+          <option value="2021/22">2021/22</option>
+        </select>
+      </div>
+      <div>
+        <label for="disciplina" class="subsection-title">Disciplina:</label>
+        <select id="disciplina" name="disciplina" required>
+          <option selected>Técnicas de Expressão do Português CTSP TPSI | S1</option>
+          <option>Matemática Aplicada CTSP TPSI | S1</option>
+          <option>Programação Web CTSP TPSI | S1</option>
+        </select>
+      </div>
+    </form>
+    <div class="text-center mt-sm">
+      <button type="submit" class="btn">Pesquisar...</button>
+    </div>
+  </div>
+</div>
+
+<div class="card mt-sm">
+  <div class="card-header">
+    <h2 class="card-title">Lista de Disciplinas</h2>
+  </div>
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>AL</th>
+          <th>Curso</th>
+          <th>Especialidade</th>
+          <th>ALP</th>
+          <th>S</th>
+          <th>UC</th>
+          <th>CH</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2023/24</td>
+          <td>Técnicas de Expressão do Português</td>
+          <td>Tec Pro Sist Inf</td>
+          <td>CTSP/2023 - EBR</td>
+          <td>S1</td>
+          <td>5.00</td>
+          <td>140.00</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-content mt-sm" style="font-size: 0.8rem; color: var(--text-light);">
+    <p><strong>Legenda:</strong> AL - Ano Letivo | ALP - Ano Letivo do Plano | S - Semestre | UC - Unidades de Crédito | CH - Carga Horária</p>
+  </div>
+  
+</div>
+<main class="main-content page-content">
+
+  <!-- Tabs: Disciplinas -->
+  <div class="req-tabs-wrapper">
+    <input type="radio" name="disc-tab" id="tab-objetivos" class="req-tab-radio">
+    <input type="radio" name="disc-tab" id="tab-biblio" class="req-tab-radio">
+    <input type="radio" name="disc-tab" id="tab-programa" class="req-tab-radio" checked>
+    <input type="radio" name="disc-tab" id="tab-outros" class="req-tab-radio">
+    <input type="radio" name="disc-tab" id="tab-docente" class="req-tab-radio">
+    <input type="radio" name="disc-tab" id="tab-documentos" class="req-tab-radio">
+
+    <div class="req-tabs">
+      <label for="tab-objetivos" class="req-tab">Objectivos / Avaliação</label>
+      <label for="tab-biblio" class="req-tab">Bibliografia</label>
+      <label for="tab-programa" class="req-tab">Programa</label>
+      <label for="tab-outros" class="req-tab">Outros Dados</label>
+      <label for="tab-docente" class="req-tab">Corpo Docente</label>
+      <label for="tab-documentos" class="req-tab">Documentos</label>
+    </div>
+
+    <div class="req-panels">
+
+      <!-- Painel: Objectivos -->
+      <div class="req-panel" id="content-objetivos">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Objectivos / Avaliação</h2>
+          </div>
+          <div class="card-content">
+            <p><strong>Objectivos da Disciplina:</strong></p>
+            <ol>
+              <li>Identificar os diferentes ambientes de execução e conhecer os principais tipos de ferramentas utilizadas no desenvolvimento de software;</li>
+              <li>Identificar as principais características das linguagens de programação;</li>
+              <li>Desenvolver programas usando a linguagem de programação Java (ou outra);</li>
+              <li>Conhecer e implementar os principais tipos de dados;</li>
+              <li>Desenvolver e implementar um algoritmo;</li>
+              <li>Analisar a eficiência de algoritmos;</li>
+              <li>Conhecer e implementar os principais algoritmos de ordenação;</li>
+              <li>Conhecer e implementar os principais algoritmos de pesquisa.</li>
+            </ol>
+            <p><strong>Critérios de avaliação:</strong><br>Tipo de Classificação: Quantitativa (0-20)<br>Metodologia de Avaliação: De acordo com o previsto para os Cursos Técnicos Superiores Profissionais.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Painel: Bibliografia -->
+      <div class="req-panel" id="content-biblio">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Bibliografia</h2>
+          </div>
+          <div class="card-content">
+            <p><strong>Bibliografia Principal:</strong></p>
+            <ul>
+              <li>Rocha, A. A. (2011). Estrutura de Dados e Algoritmos em Java. FCA.</li>
+              <li>Sedgewick, R. (1998). Algorithms in C, Part 4. Addison-Wesley.</li>
+              <li>Sedgewick, R. (2002). Algorithms in C, Part 5. Addison-Wesley.</li>
+            </ul>
+            <p><strong>Outras Fontes Bibliográficas/Documentos de Apoio:</strong></p>
+            <p>Relatório a Imprimir: Ficha(s) da Disciplina(s)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Painel: Programa -->
+      <div class="req-panel" id="content-programa">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Programa Detalhado</h2>
+          </div>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Tópico (Português)</th>
+                  <th>Tradução (Inglês)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>1.1</td><td>Iniciação à programação.</td><td>Introduction to programming.</td></tr>
+                <tr><td>1.2</td><td>Ambientes de computação e linguagens de programação.</td><td>Computing environments and programming languages.</td></tr>
+                <tr><td>1.3</td><td>Ferramentas de desenvolvimento de software.</td><td>Software development tools.</td></tr>
+                <tr><td>1.4</td><td>Introdução à linguagem de programação Python.</td><td>Introduction to Python.</td></tr>
+                <tr><td>2.1</td><td>Noções elementares: classe, atributo, método.</td><td>Class, attribute, method.</td></tr>
+                <tr><td>2.2</td><td>Tipos de dados primitivos.</td><td>Primitive data types.</td></tr>
+                <tr><td>2.3</td><td>Vetores e strings.</td><td>Vectors and strings.</td></tr>
+                <tr><td>2.4</td><td>Estruturas de controlo.</td><td>Control structures.</td></tr>
+                <tr><td>3.1</td><td>Tipos de dados e estruturas de dados.</td><td>Data types and structures.</td></tr>
+                <tr><td>3.2</td><td>Tipos primitivos vs Estrutura de Dados.</td><td>Primitive types vs data structures.</td></tr>
+                <tr><td>3.3</td><td>Filas, pilhas e listas.</td><td>Queues, stacks and lists.</td></tr>
+                <tr><td>4.1</td><td>Algoritmos.</td><td>Algorithms.</td></tr>
+                <tr><td>4.2</td><td>Algoritmos e implementação.</td><td>Algorithms and implementation.</td></tr>
+                <tr><td>4.3</td><td>Complexidade de algoritmos.</td><td>Algorithm complexity.</td></tr>
+                <tr><td>4.4</td><td>Ordenação elementar.</td><td>Basic sorting algorithms.</td></tr>
+                <tr><td>4.5</td><td>Ordenação avançada.</td><td>Advanced sorting algorithms.</td></tr>
+                <tr><td>4.6</td><td>Pesquisa linear e binária.</td><td>Linear and binary search.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Painel: Outros Dados -->
+      <div class="req-panel" id="content-outros">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Outros Dados</h2>
+          </div>
+          <div class="card-content">
+            <p><strong>Página Web:</strong> http://www.uma.pt/</p>
+            <p><strong>Atendimento:</strong> [Texto do atendimento]</p>
+            <p><strong>Tradução do Atendimento:</strong> [Translated support text]</p>
+            <p><strong>Observações:</strong> [Texto das observações]</p>
+            <p><strong>Tradução das Observações:</strong> [Translated observations]</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Painel: Corpo Docente -->
+      <div class="req-panel" id="content-docente">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Corpo Docente</h2>
+          </div>
+          <div class="card-content">
+            <ul>
+              <li><strong>David Walter Figueira Jardim</strong><br>Escola Superior de Tecnologias e Gestão<br>Funções: Ensino teórico-prático, Interno responsável, Regente, Responsável pelas Pautas<br>Email: david.jardim@staff.iprum.pt</li>
+              <li><strong>Pedro Miguel Caeiro Pereira de Mendonça</strong><br>Escola Superior de Tecnologias e Gestão<br>Funções: Horas de Aplicação<br>Email: pedro.mendonca@staff.iprum.pt</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+            <!-- Painel: Documentos -->
+      <div class="req-panel" id="content-documentos">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Documentos</h2>
+          </div>
+          <div class="card-content">
+            <div style="display: flex; flex-wrap: wrap; gap: var(--spacing-md); margin-bottom: var(--spacing-md);">
+              <div style="flex: 1 1 200px;">
+                <label for="categoria-doc">Filtrar por Categoria</label>
+                <select id="categoria-doc" style="width: 100%;">
+                  <option selected>Todos</option>
+                  <option>Plano Curricular</option>
+                  <option>Ficha da Disciplina</option>
+                  <option>Relatório</option>
+                </select>
+              </div>
+              <div style="align-self: flex-end;">
+                <button class="btn">Filtrar Lista</button>
+              </div>
+            </div>
+            <p style="color: var(--cor-info); font-size: 0.9rem;">Não foram encontrados ficheiros para a seleção efetuada ou não escolheu uma disciplina.</p>
+            <div style="margin-top: var(--spacing-md);">
+              <a href="#" class="btn secondary">Gerir ficheiros da disciplina</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- fim de .req-panels -->
+  </div> <!-- fim de .req-tabs-wrapper -->
 		</main>
 
 		<!-- Footer -->
